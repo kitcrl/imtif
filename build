@@ -1,0 +1,115 @@
+#! /bin/bash
+
+################################################################################
+################################################################################
+################################################################################
+if [ $1 == "all" -o $1 == "x32" ]
+then
+prebuild x32;
+CLFAGS=-m32 CXXFLAGS=-m32 LDFLAGS=-m32 CROSS_COMPILE=no ARCH_TYPE=x32 OUTPUT_TYPE=STATIC CUSTOM=no ONE_SHOT=no make clean;
+CLFAGS=-m32 CXXFLAGS=-m32 LDFLAGS=-m32 CROSS_COMPILE=no ARCH_TYPE=x32 OUTPUT_TYPE=STATIC CUSTOM=no ONE_SHOT=no make dir;
+CLFAGS=-m32 CXXFLAGS=-m32 LDFLAGS=-m32 CROSS_COMPILE=no ARCH_TYPE=x32 OUTPUT_TYPE=STATIC CUSTOM=no ONE_SHOT=no make all;
+postbuild imtif x32;
+fi
+
+if [ $1 == "all" -o $1 == "x64" ]
+then
+prebuild x64;
+CLFAGS=-m64 CXXFLAGS=-m64 LDFLAGS=-m64 CROSS_COMPILE=no ARCH_TYPE=x64 OUTPUT_TYPE=STATIC CUSTOM=no ONE_SHOT=no make clean;
+CLFAGS=-m64 CXXFLAGS=-m64 LDFLAGS=-m64 CROSS_COMPILE=no ARCH_TYPE=x64 OUTPUT_TYPE=STATIC CUSTOM=no ONE_SHOT=no make dir;
+CLFAGS=-m64 CXXFLAGS=-m64 LDFLAGS=-m64 CROSS_COMPILE=no ARCH_TYPE=x64 OUTPUT_TYPE=STATIC CUSTOM=no ONE_SHOT=no make all;
+postbuild imtif x64;
+fi
+
+if [ $1 == "all" -o $1 == "a32" ]
+then
+prebuild a32;
+CROSS_COMPILE=yes ARCH_TYPE=a32 OUTPUT_TYPE=STATIC CUSTOM=no ONE_SHOT=no ABI=SOFT make clean;
+CROSS_COMPILE=yes ARCH_TYPE=a32 OUTPUT_TYPE=STATIC CUSTOM=no ONE_SHOT=no ABI=SOFT make dir;
+CROSS_COMPILE=yes ARCH_TYPE=a32 OUTPUT_TYPE=STATIC CUSTOM=no ONE_SHOT=no ABI=SOFT make all;
+postbuild imtif a32;
+fi
+
+if [ $1 == "all" -o $1 == "ha32" ]
+then
+prebuild hf.a32;
+CROSS_COMPILE=yes ARCH_TYPE=a32 OUTPUT_TYPE=STATIC CUSTOM=no ONE_SHOT=no ABI=HARD make clean;
+CROSS_COMPILE=yes ARCH_TYPE=a32 OUTPUT_TYPE=STATIC CUSTOM=no ONE_SHOT=no ABI=HARD make dir;
+CROSS_COMPILE=yes ARCH_TYPE=a32 OUTPUT_TYPE=STATIC CUSTOM=no ONE_SHOT=no ABI=HARD make all;
+postbuild imtif hf.a32;
+fi
+
+if [ $1 == "all" -o $1 == "a64" ]
+then
+prebuild a64;
+CROSS_COMPILE=yes ARCH_TYPE=a64 OUTPUT_TYPE=STATIC CUSTOM=no ONE_SHOT=no ABI=SOFT make clean;
+CROSS_COMPILE=yes ARCH_TYPE=a64 OUTPUT_TYPE=STATIC CUSTOM=no ONE_SHOT=no ABI=SOFT make dir;
+CROSS_COMPILE=yes ARCH_TYPE=a64 OUTPUT_TYPE=STATIC CUSTOM=no ONE_SHOT=no ABI=SOFT make all;
+postbuild imtif a64;
+fi
+
+if [ $1 == "all" -o $1 == "ha64" ]
+then
+prebuild hf.a64;
+CROSS_COMPILE=yes ARCH_TYPE=a64 OUTPUT_TYPE=STATIC CUSTOM=no ONE_SHOT=no ABI=HARD make clean;
+CROSS_COMPILE=yes ARCH_TYPE=a64 OUTPUT_TYPE=STATIC CUSTOM=no ONE_SHOT=no ABI=HARD make dir;
+CROSS_COMPILE=yes ARCH_TYPE=a64 OUTPUT_TYPE=STATIC CUSTOM=no ONE_SHOT=no ABI=HARD make all;
+postbuild imtif hf.a64;
+fi
+
+
+
+if [ $1 == "all" -o $1 == "x32" ]
+then
+prebuild x32;
+CLFAGS=-m32 CXXFLAGS=-m32 LDFLAGS=-m32 CROSS_COMPILE=no ARCH_TYPE=x32 OUTPUT_TYPE=STATIC CUSTOM=yes ONE_SHOT=no make clean;
+CLFAGS=-m32 CXXFLAGS=-m32 LDFLAGS=-m32 CROSS_COMPILE=no ARCH_TYPE=x32 OUTPUT_TYPE=STATIC CUSTOM=yes ONE_SHOT=no make dir;
+CLFAGS=-m32 CXXFLAGS=-m32 LDFLAGS=-m32 CROSS_COMPILE=no ARCH_TYPE=x32 OUTPUT_TYPE=STATIC CUSTOM=yes ONE_SHOT=no make all;
+postbuild imtif.xf x32 imtif.xr;
+fi
+
+if [ $1 == "all" -o $1 == "x64" ]
+then
+prebuild x64;
+CLFAGS=-m64 CXXFLAGS=-m64 LDFLAGS=-m64 CROSS_COMPILE=no ARCH_TYPE=x64 OUTPUT_TYPE=STATIC CUSTOM=yes ONE_SHOT=no make clean;
+CLFAGS=-m64 CXXFLAGS=-m64 LDFLAGS=-m64 CROSS_COMPILE=no ARCH_TYPE=x64 OUTPUT_TYPE=STATIC CUSTOM=yes ONE_SHOT=no make dir;
+CLFAGS=-m64 CXXFLAGS=-m64 LDFLAGS=-m64 CROSS_COMPILE=no ARCH_TYPE=x64 OUTPUT_TYPE=STATIC CUSTOM=yes ONE_SHOT=no make all;
+postbuild imtif.xf x64 imtif.xr;
+fi
+
+if [ $1 == "all" -o $1 == "a32" ]
+then
+prebuild a32;
+CROSS_COMPILE=yes ARCH_TYPE=a32 OUTPUT_TYPE=STATIC CUSTOM=yes ONE_SHOT=no ABI=SOFT make clean;
+CROSS_COMPILE=yes ARCH_TYPE=a32 OUTPUT_TYPE=STATIC CUSTOM=yes ONE_SHOT=no ABI=SOFT make dir;
+CROSS_COMPILE=yes ARCH_TYPE=a32 OUTPUT_TYPE=STATIC CUSTOM=yes ONE_SHOT=no ABI=SOFT make all;
+postbuild imtif.xf a32 imtif.xr;
+fi
+
+if [ $1 == "all" -o $1 == "ha32" ]
+then
+prebuild hf.a32;
+CROSS_COMPILE=yes ARCH_TYPE=a32 OUTPUT_TYPE=STATIC CUSTOM=yes ONE_SHOT=no ABI=HARD make clean;
+CROSS_COMPILE=yes ARCH_TYPE=a32 OUTPUT_TYPE=STATIC CUSTOM=yes ONE_SHOT=no ABI=HARD make dir;
+CROSS_COMPILE=yes ARCH_TYPE=a32 OUTPUT_TYPE=STATIC CUSTOM=yes ONE_SHOT=no ABI=HARD make all;
+postbuild imtif.xf hf.a32 imtif.xr;
+fi
+
+if [ $1 == "all" -o $1 == "a64" ]
+then
+prebuild a64;
+CROSS_COMPILE=yes ARCH_TYPE=a64 OUTPUT_TYPE=STATIC CUSTOM=yes ONE_SHOT=no ABI=SOFT make clean;
+CROSS_COMPILE=yes ARCH_TYPE=a64 OUTPUT_TYPE=STATIC CUSTOM=yes ONE_SHOT=no ABI=SOFT make dir;
+CROSS_COMPILE=yes ARCH_TYPE=a64 OUTPUT_TYPE=STATIC CUSTOM=yes ONE_SHOT=no ABI=SOFT make all;
+postbuild imtif.xf a64 imtif.xr;
+fi
+
+if [ $1 == "all" -o $1 == "ha64" ]
+then
+prebuild hf.a64;
+CROSS_COMPILE=yes ARCH_TYPE=a64 OUTPUT_TYPE=STATIC CUSTOM=yes ONE_SHOT=no ABI=HARD make clean;
+CROSS_COMPILE=yes ARCH_TYPE=a64 OUTPUT_TYPE=STATIC CUSTOM=yes ONE_SHOT=no ABI=HARD make dir;
+CROSS_COMPILE=yes ARCH_TYPE=a64 OUTPUT_TYPE=STATIC CUSTOM=yes ONE_SHOT=no ABI=HARD make all;
+postbuild imtif.xf hf.a64 imtif.xr;
+fi
+

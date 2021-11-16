@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="i\imtif.c" />
+    <ClCompile Include="i\njson.c" />
+    <ClCompile Include="i\nm.c" />
+    <ClCompile Include="i\nutil.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="i\imtif.h" />
+    <ClInclude Include="i\njson.h" />
+    <ClInclude Include="i\nm.h" />
+    <ClInclude Include="i\nutil.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ipreBuild.bat" />
+    <None Include="postBuild.bat" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{7DBF7C4D-DF2E-4B02-AE41-A17EA8EF6599}</ProjectGuid>
+    <RootNamespace>imtif</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>12.0.30501.0</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>out\</OutDir>
+    <IntDir>out\$(ProjectName).$(Configuration).$(PlatformTarget)\</IntDir>
+    <TargetName>$(ProjectName).$(PlatformTarget)</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IntDir>out\$(ProjectName).$(Configuration).$(LlvmPlatformName)\</IntDir>
+    <OutDir>out\</OutDir>
+    <TargetName>$(ProjectName).$(LlvmPlatformName)</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>out\</OutDir>
+    <IntDir>out\$(ProjectName).$(Configuration).$(PlatformTarget)\</IntDir>
+    <TargetName>$(ProjectName).$(PlatformTarget)</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IntDir>out\$(ProjectName).$(Configuration).$(LlvmPlatformName)\</IntDir>
+    <OutDir>out\</OutDir>
+    <TargetName>$(ProjectName).$(LlvmPlatformName)</TargetName>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <PreBuildEvent>
+      <Command>ipreBuild.bat $(PlatformTarget)</Command>
+    </PreBuildEvent>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>.;i;..\mtif\$(PlatformTarget);..\mtif\openssl\v1.1.1k\$(PlatformTarget)\include\;..\mtif\openssl\v1.1.1k\$(PlatformTarget)\include\openssl;</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>x32;XWIN32;WIN32;__CUSTOM_X_SOCKET__=1;__CUSTOM_X_HTTP__=1;__CUSTOM_X_HTTPD__=0;__CUSTOM_X_HTTPSD__=0;__CUSTOM_X_WS__=1;__CUSTOM_X_SERIAL__=1;__CUSTOM_X_SIFR__=0;__STATIC_LIB__=0;__SSL_TLS__=0;__CODE_LIMITER__=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <CompileAs>CompileAsC</CompileAs>
+      <SDLCheck>false</SDLCheck>
+    </ClCompile>
+    <PostBuildEvent>
+      <Command>postBuild.bat $(ProjectName) $(PlatformTarget) icode.xr</Command>
+    </PostBuildEvent>
+    <Lib>
+      <AdditionalDependencies>ws2_32.lib;crypt32.lib;libcrypto.lib;libssl.lib;</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\mtif\openssl\v1.1.1k\$(PlatformTarget)\lib\</AdditionalLibraryDirectories>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <PreBuildEvent>
+      <Command>ipreBuild.bat $(LlvmPlatformName)</Command>
+    </PreBuildEvent>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>.;i;..\mtif\$(LlvmPlatformName);..\mtif\openssl\v1.1.1k\$(LlvmPlatformName)\include\;..\mtif\openssl\v1.1.1k\$(LlvmPlatformName)\include\openssl;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>x64;XWIN32;__CUSTOM_X_SOCKET__=1;__CUSTOM_X_HTTP__=1;__CUSTOM_X_HTTPD__=0;__CUSTOM_X_HTTPSD__=0;__CUSTOM_X_WS__=1;__CUSTOM_X_SERIAL__=1;__CUSTOM_X_SIFR__=0;__STATIC_LIB__=0;__SSL_TLS__=0;__CODE_LIMITER__=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>CompileAsC</CompileAs>
+      <SDLCheck>false</SDLCheck>
+    </ClCompile>
+    <PostBuildEvent>
+      <Command>postBuild.bat $(ProjectName) $(LlvmPlatformName) icode.xr</Command>
+    </PostBuildEvent>
+    <Lib>
+      <AdditionalDependencies>libcrypto.lib;libssl.lib;</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\mtif\openssl\v1.1.1k\$(LlvmPlatformName)\lib\</AdditionalLibraryDirectories>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <PreBuildEvent>
+      <Command>ipreBuild.bat $(PlatformTarget)</Command>
+    </PreBuildEvent>
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>.;i;..\mtif\$(PlatformTarget);..\mtif\openssl\v1.1.1k\$(PlatformTarget)\include\;..\mtif\openssl\v1.1.1k\$(PlatformTarget)\include\openssl;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>x32;XWIN32;WIN32;__CUSTOM_X_SOCKET__=1;__CUSTOM_X_HTTP__=1;__CUSTOM_X_HTTPD__=0;__CUSTOM_X_HTTPSD__=0;__CUSTOM_X_WS__=1;__CUSTOM_X_SERIAL__=1;__CUSTOM_X_SIFR__=0;__STATIC_LIB__=0;__SSL_TLS__=0;__CODE_LIMITER__=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>CompileAsC</CompileAs>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <SDLCheck>false</SDLCheck>
+    </ClCompile>
+    <PostBuildEvent>
+      <Command>postBuild.bat $(ProjectName) $(PlatformTarget) icode.xr</Command>
+    </PostBuildEvent>
+    <Lib>
+      <AdditionalDependencies>ws2_32.lib;crypt32.lib;libcrypto.lib;libssl.lib;</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\mtif\openssl\v1.1.1k\$(PlatformTarget)\lib\</AdditionalLibraryDirectories>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <PreBuildEvent>
+      <Command>ipreBuild.bat $(LlvmPlatformName)</Command>
+    </PreBuildEvent>
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>.;i;..\mtif\$(LlvmPlatformName);..\mtif\openssl\v1.1.1k\$(LlvmPlatformName)\include\;..\mtif\openssl\v1.1.1k\$(LlvmPlatformName)\include\openssl;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>x64;XWIN32;__CUSTOM_X_SOCKET__=1;__CUSTOM_X_HTTP__=1;__CUSTOM_X_HTTPD__=0;__CUSTOM_X_HTTPSD__=0;__CUSTOM_X_WS__=1;__CUSTOM_X_SERIAL__=1;__CUSTOM_X_SIFR__=0;__STATIC_LIB__=0;__SSL_TLS__=0;__CODE_LIMITER__=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>CompileAsC</CompileAs>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <SDLCheck>false</SDLCheck>
+    </ClCompile>
+    <PostBuildEvent>
+      <Command>postBuild.bat $(ProjectName) $(LlvmPlatformName) icode.xr</Command>
+    </PostBuildEvent>
+    <Lib>
+      <AdditionalDependencies>libcrypto.lib;libssl.lib;</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\mtif\openssl\v1.1.1k\$(LlvmPlatformName)\lib\</AdditionalLibraryDirectories>
+    </Lib>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

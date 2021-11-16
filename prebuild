@@ -1,0 +1,8 @@
+#! /bin/bash
+
+PLATFORMTARGET=$1
+MTIF_PATH=../mtif/
+
+\cp -rfp $MTIF_PATH/$PLATFORMTARGET/.version                         .
+\cp -rfp $MTIF_PATH/$PLATFORMTARGET/.secret.key*                     .
+\cp -rfp $MTIF_PATH/$PLATFORMTARGET/common.h                         .

@@ -1,0 +1,49 @@
+#! /bin/bash
+
+if [ -z "$1" ]
+then
+exit;
+fi
+
+if [ -z "$2" ]
+then
+exit;
+fi
+
+PROJECTNAME=$1
+PLATFORMTARGET=$2
+PACKAGENAME=$3
+TARGET=$PROJECTNAME.$PLATFORMTARGET
+
+if [ -f .version ]; then
+	while read line; do _ver=$line; done<.version;
+fi
+ver=${_ver:1:16};
+
+MTIF_PATH=../mtif/
+
+echo --------------------------------------------------------------------------------
+echo  $PROJECTNAME $TARGET $PLATFORMTARGET $ver
+echo ================================================================================
+
+mkdir -p ./out
+mkdir -p $MTIF_PATH
+mkdir -p $MTIF_PATH/
+mkdir -p $MTIF_PATH/$PLATFORMTARGET
+
+\cp -rfp ./i/*.h                           $MTIF_PATH/$PLATFORMTARGET
+
+\cp -rfp ./out/$TARGET.a  $MTIF_PATH/$PLATFORMTARGET
+\cp -rfp ./out/$TARGET.a  $MTIF_PATH/$PLATFORMTARGET/$PROJECTNAME.a
+\cp -rfp ./out/$TARGET.a  $MTIF_PATH/$PLATFORMTARGET/$TARGET.$ver.a
+
+if [ -z "$PACKAGENAME" ]
+then
+exit;
+fi
+
+
+\cp -rfp ./out/$TARGET.a $MTIF_PATH/$PLATFORMTARGET/$PACKAGENAME.a
+\cp -rfp ./out/$TARGET.a $MTIF_PATH/$PLATFORMTARGET/$PACKAGENAME.$PLATFORMTARGET.a
+\cp -rfp ./out/$TARGET.a $MTIF_PATH/$PLATFORMTARGET/$PACKAGENAME.$PLATFORMTARGET.$ver.a
+

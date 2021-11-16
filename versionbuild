@@ -1,0 +1,63 @@
+#! /bin/bash
+
+if [ -z "$1" ]
+then
+exit;
+fi
+
+if [ -z "$2" ]
+then
+exit;
+fi
+
+TARGET=$1
+PLATFORMTARGET=$2
+PACKAGENAME=$3
+
+if [ -f .version ]; then
+	while read line; do _ver=$line; done<.version;
+fi
+ver=${_ver:1:16};
+
+echo ----------------------------------
+echo  $TARGET $PLATFORMTARGET  $ver
+echo ==================================
+
+mkdir -p ./out
+\cp -rfp ./out/$TARGET                            ../../../mtif/
+\cp -rfp ./m/zio.x.h                              ../../../mtif/
+\cp -rfp ./.secret.key.$PLATFORMTARGET.idx        ../../../mtif/
+\cp -rfp ./.secret.key.$PLATFORMTARGET.dat        ../../../mtif/
+
+
+if [ $PLATFORMTARGET == "x32" ]; then
+	../../../mtif/xtools/zioXmake/out/zioXmake.x32 out/zio.x.sifr.cold.x32 -post out/$TARGET out/$TARGET.so
+fi
+if [ $PLATFORMTARGET == "x64" ]; then
+	../../../mtif/xtools/zioXmake/out/zioXmake.x64 out/zio.x.sifr.cold.x64 -post out/$TARGET out/$TARGET.so
+fi
+if [ $PLATFORMTARGET == "a32" ]; then
+	../../../mtif/xtools/zioXmake/out/zioXmake.x32 out/zio.x.sifr.cold.x32 -post out/$TARGET out/$TARGET.so
+fi
+if [ $PLATFORMTARGET == "a64" ]; then
+	../../../mtif/xtools/zioXmake/out/zioXmake.x64 out/zio.x.sifr.cold.x64 -post out/$TARGET out/$TARGET.so
+fi
+
+
+\cp -rfp ./out/$TARGET.so ../../../mtif/
+\cp -rfp ./out/$TARGET.so ../../../mtif/$TARGET.$ver.so
+
+if [ -z "$PACKAGENAME" ]
+then
+exit;
+fi
+
+
+echo $TARGET $PACKAGENAME $PLATFORMTARGET
+
+\cp -rfp ./out/$TARGET.so ../../../mtif/$PACKAGENAME.$PLATFORMTARGET
+\cp -rfp ./out/$TARGET.so ../../../mtif/$PACKAGENAME.$PLATFORMTARGET.$ver.so
+\cp -rfp ./out/$TARGET.so ../../../mtif/$PACKAGENAME.$PLATFORMTARGET.so
+
+
+
