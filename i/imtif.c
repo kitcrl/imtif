@@ -206,6 +206,11 @@ int32_t modulus(IMTIF* imtif, int8_t* libpath)
   #endif
   #endif
 
+  #if __STATIC_LIB__==1
+  imtif->getMessage = mtifGetMessage;
+  imtif->setMessage = mtifSetMessage;
+  imtif->putMessage = mtifPutMessage;
+  #endif
 
   #if __CODE_LIMITER__==1
   if (imtif->hmodule_idx == 0 )

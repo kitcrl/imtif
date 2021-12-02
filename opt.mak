@@ -5,6 +5,9 @@
 #                                                                              #
 ################################################################################
 OUTPUT_NAME = $(notdir $(shell pwd))
+ifeq ($(ONE_SHOT), yes)
+OUTPUT_NAME = libimtif
+endif
 PROJ_PATH = .
 COPT += -D__TRIGONOMETRIC__=1
 ifeq ($(CUSTOM), no)
@@ -30,6 +33,16 @@ ifeq ($(CUSTOM), yes)
 	COPT += -D__CODE_LIMITER__=0
 endif
 
+ifeq ($(ONE_SHOT), yes)
+	COPT += -D__STATIC_LIB__=1
+	xLIB += $(PROJ_PATH)/../mtif/$(XTARGET)/libmtif.x.$(XTARGET).a
+else
+	COPT += -D__STATIC_LIB__=0
+endif
+
+
+
+
 SRC  = .
 SRC += $(PROJ_PATH)/.
 SRC += $(PROJ_PATH)/i
@@ -44,6 +57,11 @@ endif
 ifeq ($(CUSTOM), no)
   _TARGET_NAME = $(OUTPUT_NAME)
 endif
+
+ifeq ($(ONE_SHOT), yes)
+  _TARGET_NAME = $(OUTPUT_NAME)
+endif
+
 
 INC += -I$(PROJ_PATH)/../mtif/$(XTARGET)
 ifeq ($(CUSTOM), no)

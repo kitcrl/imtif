@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="i">
+      <UniqueIdentifier>{3F3BEFE8-DE4E-47D8-9972-4CAD3A65B8C0}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="postBuild.bat" />
+    <None Include="ipreBuild.bat" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="i\imtif.h">
+      <Filter>i</Filter>
+    </ClInclude>
+    <ClInclude Include="i\njson.h">
+      <Filter>i</Filter>
+    </ClInclude>
+    <ClInclude Include="i\nutil.h">
+      <Filter>i</Filter>
+    </ClInclude>
+    <ClInclude Include="i\nm.h">
+      <Filter>i</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="i\imtif.c">
+      <Filter>i</Filter>
+    </ClCompile>
+    <ClCompile Include="i\njson.c">
+      <Filter>i</Filter>
+    </ClCompile>
+    <ClCompile Include="i\nutil.c">
+      <Filter>i</Filter>
+    </ClCompile>
+    <ClCompile Include="i\nm.c">
+      <Filter>i</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
