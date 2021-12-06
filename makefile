@@ -52,14 +52,14 @@ endif
 ifeq ($(ARCH_TYPE), a32) #####
 	COPT += -Da32
 	ifeq ($(ABI), HARD)
-		TOOLCHAIN_PATH = /usr/local/ext/toolchain/x64/arm-linux-gnueabihf/
+		TOOLCHAIN_PATH = /usr/local/ext/toolchain/x64/v7/arm-linux-gnueabihf/
 		XCOMPILE- = arm-linux-gnueabihf-
 		XTARGET = hf.a32
 		COPT += -DABI_HARD
 		COPT += -mfloat-abi=hard
 	endif
 	ifeq ($(ABI), SOFT)
-		TOOLCHAIN_PATH = /usr/local/ext/toolchain/x64/arm-linux-gnueabi/
+		TOOLCHAIN_PATH = /usr/local/ext/toolchain/x64/v7/arm-linux-gnueabi/
 		XCOMPILE- = arm-linux-gnueabi-
 		XTARGET = a32
 		COPT += -DABI_SOFT
@@ -69,7 +69,7 @@ endif #####
 
 ifeq ($(ARCH_TYPE), a64)
 	COPT += -Da64
-	TOOLCHAIN_PATH = /usr/local/ext/toolchain/x64/aarch64-linux-gnu
+	TOOLCHAIN_PATH = /usr/local/ext/toolchain/x64/v7/aarch64-linux-gnu
 	XCOMPILE- = aarch64-linux-gnu-
 	ifeq ($(ABI), HARD)
 		XTARGET   = hf.a64
