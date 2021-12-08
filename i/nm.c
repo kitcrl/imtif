@@ -255,7 +255,7 @@ void* __cmain(int argc, char** argv)
 }
 
 
-int32_t __box_icode_x(int32_t argc, int8_t** argv, ServiceArgs* p)
+int32_t __box_imtif_x(int32_t argc, int8_t** argv, ServiceArgs* p)
 {
 	int32_t e = 0;
   int8_t  _argv[512] = {0};
@@ -326,13 +326,11 @@ void __nmain(int32_t argc, int8_t** argv, void* (*f0)(void*), void* (*f1)(void*)
 	sa.f[1] = f1;
 	sa.o = o;
 
-	__box_icode_x(argc, argv,&sa);
+	__box_imtif_x(argc, argv,&sa);
 	
 
   memset(_argv, 0, 512);
   readArgs(argc, argv, "--m", _argv);
-  
-
 
 	#if defined XWIN32
 	if ( (_argv[0]=='s') || (_argv[0]=='S') )

@@ -8,6 +8,10 @@ OUTPUT_NAME = $(notdir $(shell pwd))
 ifeq ($(ONE_SHOT), yes)
 OUTPUT_NAME = libimtif
 endif
+
+COPT += -D__DEBUG__=1
+
+
 PROJ_PATH = .
 COPT += -D__TRIGONOMETRIC__=1
 ifeq ($(CUSTOM), no)
@@ -19,7 +23,7 @@ ifeq ($(CUSTOM), no)
 	COPT += -D__CUSTOM_X_SERIAL__=1
 	COPT += -D__CUSTOM_X_SIFR__=1
 	COPT += -D__SSL_TLS__=1
-	COPT += -D__CODE_LIMITER__=0
+	COPT += -D__MTIF_LIMITER__=0
 endif
 ifeq ($(CUSTOM), yes)
 	COPT += -D__CUSTOM_X_SOCKET__=0
@@ -30,7 +34,7 @@ ifeq ($(CUSTOM), yes)
 	COPT += -D__CUSTOM_X_SERIAL__=1
 	COPT += -D__CUSTOM_X_SIFR__=0
 	COPT += -D__SSL_TLS__=0
-	COPT += -D__CODE_LIMITER__=0
+	COPT += -D__MTIF_LIMITER__=0
 endif
 
 ifeq ($(ONE_SHOT), yes)

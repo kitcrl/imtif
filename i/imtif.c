@@ -104,7 +104,7 @@ typedef struct
   imtif icd;
 
 
-  #if __CODE_LIMITER__==1
+  #if __MTIF_LIMITER__==1
   uint32_t SR;
   int32_t _tid;
   int32_t _thr;
@@ -145,12 +145,12 @@ int32_t _ARGS(int8_t* s, int32_t idx, int8_t* v)
 }
 
 
-#if __CODE_LIMITER__==1
+#if __MTIF_LIMITER__==1
 #define  TIME_LIMITER        3000
 #endif
 
 
-#if __CODE_LIMITER__==1
+#if __MTIF_LIMITER__==1
 void* __code_limiter(void* o)
 {
   int32_t e = 0;
@@ -180,6 +180,10 @@ int32_t modulus(IMTIF* imtif, int8_t* libpath)
 {
   int32_t r = 0;
 
+  #if __DEBUG__
+  printf(" %-16s:%6d | -> hmodule -> %s\r\n",__FUNCTION__,__LINE__, imtif->hmodule?"NOT NULL":"NULL");
+  #endif
+
   #if __STATIC_LIB__==0
   if ( imtif->hmodule == 0 )
   {
@@ -192,6 +196,9 @@ int32_t modulus(IMTIF* imtif, int8_t* libpath)
     #endif
   }
   if ( imtif->hmodule == 0 ) return 0xEFFFFFFF;
+  #if __DEBUG__
+  printf(" %-16s:%6d |\r\n",__FUNCTION__,__LINE__);
+  #endif
 
   #if defined LINUX
   if ( imtif->setMessage == 0 )	imtif->setMessage   = dlsym(imtif->hmodule, "mtifSetMessage");
@@ -205,6 +212,9 @@ int32_t modulus(IMTIF* imtif, int8_t* libpath)
   if ( imtif->putMessage == 0 )	*(FARPROC*)&imtif->putMessage   = GetProcAddress(imtif->hmodule, "mtifPutMessage");
   #endif
   #endif
+  #if __DEBUG__
+  printf(" %-16s:%6d |\r\n",__FUNCTION__,__LINE__);
+  #endif
 
   #if __STATIC_LIB__==1
   imtif->getMessage = mtifGetMessage;
@@ -212,12 +222,15 @@ int32_t modulus(IMTIF* imtif, int8_t* libpath)
   imtif->putMessage = mtifPutMessage;
   #endif
 
-  #if __CODE_LIMITER__==1
+  #if __MTIF_LIMITER__==1
   if (imtif->hmodule_idx == 0 )
   {
     xTHREAD_CREATE(__code_limiter, imtif, (void*)&imtif->_tid, imtif->_thr);
     xGET_SEMAPHORE(imtif->SR, 0x80000000, 0x80000000, 0x00002000, r);
   }
+  #endif
+  #if __DEBUG__
+  printf(" %-16s:%6d |\r\n",__FUNCTION__,__LINE__);
   #endif
 
   imtif->hmodule_idx++;
@@ -235,7 +248,7 @@ int32_t unmodulus(IMTIF* imtif)
   if ( imtif->hmodule_idx > 0 ) return imtif->hmodule_idx;
 
 
-  #if __CODE_LIMITER__==1
+  #if __MTIF_LIMITER__==1
   if (imtif->hmodule_idx == 0 )
   {
     if ( xCHECK_SEMAPHORE(imtif->SR,0x80000000,0x80000000) )
@@ -628,6 +641,10 @@ void* __http_callback(void* h, void* msg, void* wparam, void* lparam)
   IMTIF* imtif = (IMTIF*)h;
   int32_t fd=0;
   int32_t e=0;
+
+  #if __DEBUG__
+  printf(" %-16s:%6d |  %08X %08X %08X %08X \r\n",__FUNCTION__,__LINE__, (uint32_t)h, (uint32_t)msg, (uint32_t)wparam, (uint32_t)lparam);
+  #endif
 
   switch(LOWORD((uint32_t)msg))
   {
@@ -1081,6 +1098,11 @@ int32_t __httpd_open(void** h, int8_t* argv, int32_t (*f[])(void*,int32_t,int8_t
   int8_t  _iargv[4096] = {0};
   int8_t  _iap = 0;
 
+
+  #if __DEBUG__
+  printf(" %-16s:%6d |\r\n",__FUNCTION__,__LINE__);
+  #endif
+
   if ( *h ) return 0xEFFFFFFF;
   *h = imtif = (IMTIF*)calloc(1, sizeof(IMTIF));
 
@@ -1090,11 +1112,17 @@ int32_t __httpd_open(void** h, int8_t* argv, int32_t (*f[])(void*,int32_t,int8_t
   }
   imtif->obj = o;
 
+  #if __DEBUG__
+  printf(" %-16s:%6d | -> %s\r\n",__FUNCTION__,__LINE__, argv);
+  #endif
   e = NJSON_STR(argv, "SYSTEM_LIBRARY", _argv);
   if ( e > 0 ) sprintf(&_iargv[_iap], "%s\n", _argv);
   else sprintf(&_iargv[_iap], "\n", _argv);
   _iap = strlen(_iargv);
 
+  #if __DEBUG__
+  printf(" %-16s:%6d | -> %s\r\n",__FUNCTION__,__LINE__, _argv);
+  #endif
   if ( modulus(imtif, _argv) < 0 ) return 0xEF000001;
 
   e = NJSON_STR(argv, "SECRET_KEY_0", _argv);
@@ -1107,12 +1135,18 @@ int32_t __httpd_open(void** h, int8_t* argv, int32_t (*f[])(void*,int32_t,int8_t
   else sprintf(&_iargv[_iap], "\n", _argv);
   _iap = strlen(_iargv);
 
+  #if __DEBUG__
+  printf(" %-16s:%6d |\r\n",__FUNCTION__,__LINE__);
+  #endif
   e = imtif->setMessage(&imtif->hdl, (void*)MAKELONG(INIT,MTIF), _iargv, 0);
 
   e = imtif->setMessage(&imtif->h, (void*)MAKELONG(INIT           , XHTTPD), (void*)imtif->hdl, 0);
   e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_DELAY_0     , XHTTPD), (void*)"3000",(void*)strlen("XXX"));
   e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_ECHOMODE    , XHTTPD), (void*)"0",(void*)strlen("X"));
   e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_KEY,XHTTPD), (void*)"shinbaad@gmail.com",(void*)strlen("XXXXXXXXXXXXXXXXXX"));
+  #if __DEBUG__
+  printf(" %-16s:%6d |\r\n",__FUNCTION__,__LINE__);
+  #endif
 
   ///////   {"IP":"192.168.0.2","PORT":"7887","CSTYPE":"CLIENT","PROTOCOL":"TCP","CASTTYPE":"UNICAST"}
   if ( NJSON_STR(argv, "BUF_SZ", _argv)<0 )
@@ -1125,21 +1159,41 @@ int32_t __httpd_open(void** h, int8_t* argv, int32_t (*f[])(void*,int32_t,int8_t
     imtif->pb = (int8_t*)calloc(atoi(_argv), sizeof(int8_t));
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_BUFFER_PTR,XHTTPD), (void*)imtif->pb,(void*)atoi(_argv));
   }
+  #if __DEBUG__
+  printf(" %-16s:%6d |\r\n",__FUNCTION__,__LINE__);
+  #endif
 
   if ( NJSON_STR(argv, "IP", _argv)<0 )
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_IP,XHTTPD), (void*)"127.0.0.1",(void*)strlen("XXXXXXXXX"));
   else
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_IP,XHTTPD), (void*)_argv,(void*)strlen(_argv));
+  #if __DEBUG__
+  printf(" %-16s:%6d |\r\n",__FUNCTION__,__LINE__);
+  #endif
 
   if ( NJSON_STR(argv, "PORT", _argv)<0 )
+  {
+  #if __DEBUG__
+  printf(" %-16s:%6d |\r\n",__FUNCTION__,__LINE__);
+  #endif
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_PORT, XHTTPD), (void*)"80",(void*)strlen("XXX"));
+  #if __DEBUG__
+  printf(" %-16s:%6d |\r\n",__FUNCTION__,__LINE__);
+  #endif
+  }
   else
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_PORT, XHTTPD), (void*)_argv,(void*)strlen(_argv));
+  #if __DEBUG__
+  printf(" %-16s:%6d |\r\n",__FUNCTION__,__LINE__);
+  #endif
 
   if ( NJSON_STR(argv, "CSTYPE", _argv)<0 )
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_CSTYPE, XHTTPD), (void*)"SERVER",(void*)strlen("XXXXXX"));
   else
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_CSTYPE, XHTTPD), (void*)_argv,(void*)strlen(_argv));
+  #if __DEBUG__
+  printf(" %-16s:%6d |\r\n",__FUNCTION__,__LINE__);
+  #endif
 
   if ( NJSON_STR(argv, "MAX_FD", _argv)<0 )
   {
@@ -1151,6 +1205,9 @@ int32_t __httpd_open(void** h, int8_t* argv, int32_t (*f[])(void*,int32_t,int8_t
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_MAX_FD, XHTTPD), (void*)_argv,(void*)strlen(_argv));
     imtif->icd.fdset.max = atoi(_argv);
   }
+  #if __DEBUG__
+  printf(" %-16s:%6d |\r\n",__FUNCTION__,__LINE__);
+  #endif
 
   if ( NJSON_STR(argv, "SYNC", _argv)<0 )
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_SYNC, XHTTPD), (void*)"DISABLE",(void*)strlen("XXXXXXX"));
@@ -1186,9 +1243,19 @@ int32_t __httpd_open(void** h, int8_t* argv, int32_t (*f[])(void*,int32_t,int8_t
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_INDEX, XHTTPD), (void*)"index.html",(void*)strlen("XXXXXXXXXX"));
   else 
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_INDEX, XHTTPD), (void*)_argv,(void*)strlen(_argv));
+  #if __DEBUG__
+  printf(" %-16s:%6d |\r\n",__FUNCTION__,__LINE__);
+  #endif
 
   e = imtif->setMessage( imtif->h, (void*)MAKELONG(SYSTEM_CALLBACK,XHTTPD),__httpd_callback, imtif);
+  #if __DEBUG__
+  printf(" %-16s:%6d |\r\n",__FUNCTION__,__LINE__);
+  #endif
+
   imtif->fd = e = imtif->setMessage( imtif->h, (void*)MAKELONG(ENABLE,XHTTPD), 0,0);
+  #if __DEBUG__
+  printf(" %-16s:%6d |\r\n",__FUNCTION__,__LINE__);
+  #endif
 
   return e;
 }

@@ -161,6 +161,9 @@ int32_t njson_kv(int8_t* s, int32_t cnt, int32_t idx, int8_t* key, int8_t* val)
   for ( i=0 ;  i<=cnt ; i++ )
   {
     mode = 0;
+
+    if ( *s == 0 ) break;
+
     for ( ; (*s!='\"') ; s++ ) ; //FF
 
     p = key;
@@ -263,6 +266,7 @@ int32_t NJSON_STR(int8_t* json, int8_t* key, int8_t* v)
   _out = (int8_t*)calloc(sz, sizeof(int8_t));
 
   cnt = njson(json, sz, tmp);
+
   for ( i=0 ; i<=cnt ; i++ )
   {
     njson_kv(tmp, cnt, i, _key, _val);
