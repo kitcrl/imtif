@@ -339,9 +339,9 @@ void* __socket_callback(void* h, void* msg, void* wparam, void* lparam)
       break;
     case 0xE000100F:
       break;
-    case 0xE000FD1B:
+    case 0xE000FDAB:
       break;
-    case 0xE000FD1A:
+    case 0xE000FDAA:
       if ( imtif->callback[IMTIF_CALLBACK_CONNECTED] ) e = imtif->callback[IMTIF_CALLBACK_CONNECTED](imtif->h, (int32_t)wparam, 0, 0, lparam, imtif->obj);
       break;
     case 0xE000101B:
@@ -358,7 +358,7 @@ void* __socket_callback(void* h, void* msg, void* wparam, void* lparam)
       break;
     case 0xE000FDFF:
       break;
-    case 0xE00010B0:
+    case 0xE0001010:
       break;
     case 0xE00010F0: //IO Function Output
       break;
@@ -681,9 +681,9 @@ void* __http_callback(void* h, void* msg, void* wparam, void* lparam)
       break;
     case 0xE000100F:
       break;
-    case 0xE000FD1B:
+    case 0xE000FDAB:
       break;
-    case 0xE000FD1A:
+    case 0xE000FDAA:
       break;
     case 0xE000101B:
       break;
@@ -699,7 +699,7 @@ void* __http_callback(void* h, void* msg, void* wparam, void* lparam)
       break;
     case 0xE000FDFF:
       break;
-    case 0xE00010B0:
+    case 0xE0001010:
       break;
     case 0xE00010F0: //IO Function Output
       break;
@@ -997,9 +997,9 @@ void* __httpd_callback(void* h, void* msg, void* wparam, void* lparam)
       break;
     case 0xE000100F:
       break;
-    case 0xE000FD1B:
+    case 0xE000FDAB:
       break;
-    case 0xE000FD1A:
+    case 0xE000FDAA:
       break;
     case 0xE000101B:
       break;
@@ -1014,7 +1014,7 @@ void* __httpd_callback(void* h, void* msg, void* wparam, void* lparam)
       break;
     case 0xE000FDFF:
       break;
-    case 0xE00010B0:
+    case 0xE0001010:
       break;
     case 0xE00010F0: //IO Function Output
       break;
@@ -1677,10 +1677,10 @@ void* __httpsd_callback(void* h, void* msg, void* wparam, void* lparam)
       break;
     case 0xE000100F:
       break;
-    case 0xE000FD1B:
+    case 0xE000FDAB:
       e = -1;
       break;
-    case 0xE000FD1A:
+    case 0xE000FDAA:
       __httpsd_accept(h,msg,wparam,lparam);
       if ( imtif->callback[IMTIF_CALLBACK_CONNECTED] ) e = imtif->callback[IMTIF_CALLBACK_CONNECTED](imtif->h, (int32_t)wparam, 0, 0, 0, imtif->obj);
       break;
@@ -1711,7 +1711,7 @@ void* __httpsd_callback(void* h, void* msg, void* wparam, void* lparam)
       break;
     case 0xE000FDFF:
       break;
-    case 0xE00010B0:
+    case 0xE0001010:
       break;
     case 0xE00010F0: //IO Function Output
       break;
@@ -1999,9 +1999,9 @@ void* __ws_callback(void* h, void* msg, void* wparam, void* lparam)
       break;
     case 0xE000100F:
       break;
-    case 0xE000FD1B:
+    case 0xE000FDAB:
       break;
-    case 0xE000FD1A:
+    case 0xE000FDAA:
       if(imtif->callback[IMTIF_CALLBACK_CONNECTED]) e = imtif->callback[IMTIF_CALLBACK_CONNECTED](imtif->h,(int32_t)wparam, 0, 0, lparam, imtif->obj);
       break;
     case 0xE000101B:
@@ -2018,7 +2018,7 @@ void* __ws_callback(void* h, void* msg, void* wparam, void* lparam)
       break;
     case 0xE000FDFF:
       break;
-    case 0xE00010B0:
+    case 0xE0001010:
       break;
     case 0xE00010F0: //IO Function Output
       break;
@@ -2310,9 +2310,9 @@ void* __serial_callback(void* h, void* msg, void* wparam, void* lparam)
       break;
     case 0xE000100F:
       break;
-    case 0xE000FD1B:
+    case 0xE000FDAB:
       break;
-    case 0xE000FD1A:
+    case 0xE000FDAA:
       break;
     case 0xE000101B:
       break;
@@ -2327,7 +2327,7 @@ void* __serial_callback(void* h, void* msg, void* wparam, void* lparam)
       break;
     case 0xE000FDFF:
       break;
-    case 0xE00010B0:
+    case 0xE0001010:
       break;
     case 0xE00010F0: //IO Function Output
       break;
