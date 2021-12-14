@@ -121,7 +121,7 @@
       <SDLCheck>false</SDLCheck>
     </ClCompile>
     <PostBuildEvent>
-      <Command>postBuild.bat $(ProjectName) $(PlatformTarget) icode.xr</Command>
+      <Command>postBuild.bat $(ProjectName) $(PlatformTarget) imtif.xr</Command>
     </PostBuildEvent>
     <Lib>
       <AdditionalDependencies>ws2_32.lib;crypt32.lib;libcrypto.lib;libssl.lib;</AdditionalDependencies>
@@ -146,7 +146,7 @@
       <SDLCheck>false</SDLCheck>
     </ClCompile>
     <PostBuildEvent>
-      <Command>postBuild.bat $(ProjectName) $(LlvmPlatformName) icode.xr</Command>
+      <Command>postBuild.bat $(ProjectName) $(LlvmPlatformName) imtif.xr</Command>
     </PostBuildEvent>
     <Lib>
       <AdditionalDependencies>libcrypto.lib;libssl.lib;</AdditionalDependencies>
@@ -172,7 +172,7 @@
       <SDLCheck>false</SDLCheck>
     </ClCompile>
     <PostBuildEvent>
-      <Command>postBuild.bat $(ProjectName) $(PlatformTarget) icode.xr</Command>
+      <Command>postBuild.bat $(ProjectName) $(PlatformTarget) imtif.xr</Command>
     </PostBuildEvent>
     <Lib>
       <AdditionalDependencies>ws2_32.lib;crypt32.lib;libcrypto.lib;libssl.lib;</AdditionalDependencies>
@@ -199,7 +199,7 @@
       <SDLCheck>false</SDLCheck>
     </ClCompile>
     <PostBuildEvent>
-      <Command>postBuild.bat $(ProjectName) $(LlvmPlatformName) icode.xr</Command>
+      <Command>postBuild.bat $(ProjectName) $(LlvmPlatformName) imtif.xr</Command>
     </PostBuildEvent>
     <Lib>
       <AdditionalDependencies>libcrypto.lib;libssl.lib;</AdditionalDependencies>
