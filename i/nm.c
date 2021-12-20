@@ -2,11 +2,11 @@
 #include <stdlib.h>
 #include <stdint.h>
 
-#if defined XWIN32
+#if __WIN32__
 #include <Windows.h>
 #endif
 
-#if defined LINUX
+#if __LINUX__
 #include <dlfcn.h>
 #endif
 
@@ -25,12 +25,12 @@ typedef struct
 static ServiceArgs sa = {0};
 
 
-#if defined XWIN32
+#if __WIN32__
 static uint32_t status_service;
 static uint32_t hsvc = SERVICE_STOPPED;
 #endif
 
-#if defined XWIN32
+#if __WIN32__
 VOID SET_SERVICE_STATE(SERVICE_STATUS_HANDLE hd, DWORD dwState)
 {
 	SERVICE_STATUS ss;
@@ -47,14 +47,14 @@ VOID SET_SERVICE_STATE(SERVICE_STATUS_HANDLE hd, DWORD dwState)
 }
 #endif
 
-#if defined XWIN32
+#if __WIN32__
 DWORD GET_SERVICE_STATE()
 {
 	return status_service;
 }
 #endif
 
-#if defined XWIN32
+#if __WIN32__
 uint32_t WINAPI __ServiceHandler(uint32_t ctrl, uint32_t evnt, void* p, void* ctx)
 {
 	switch(ctrl)
@@ -212,7 +212,7 @@ void* __cmain(int argc, char** argv)
 
 	if ( (_argv[0]=='s') || (_argv[0]=='S') )
 	{
-		#if defined XWIN32
+		#if __WIN32__
     memset(_argv, 0, 512);
     readArgs(argc, argv, "--s", _argv); 
 		hsvc = RegisterServiceCtrlHandlerEx(_argv, __ServiceHandler, 0);
@@ -243,10 +243,10 @@ void* __cmain(int argc, char** argv)
 		while ( 1 )
 		{
 			sa.f[1](sa.o);
-			#if defined XWIN32
+			#if __WIN32__
 			Sleep(1);
 			#endif
-			#if defined LINUX
+			#if __LINUX__
 			usleep(1);
 			#endif
 		}
@@ -268,21 +268,21 @@ int32_t __box_imtif_x(int32_t argc, int8_t** argv, ServiceArgs* p)
   readArgs(argc, argv, "--X", _argv); 
 
   #if __STATIC_LIB__==0
-  #if defined LINUX
+  #if __LINUX__
   hmodule = dlopen(_argv, RTLD_LAZY);
   #endif
 
-  #if defined XWIN32
+  #if __WIN32__
   hmodule = LoadLibrary(_argv);
   #endif
 
   if ( hmodule == 0 ) return 0xEFFFFFFF;
 
-  #if defined LINUX
+  #if __LINUX__
   if ( getMessage == 0 )	getMessage   = dlsym(hmodule, "mtifGetMessage");
   #endif
 
-  #if defined XWIN32
+  #if __WIN32__
   if ( getMessage == 0 )	*(FARPROC*)&getMessage   = GetProcAddress(hmodule, "mtifGetMessage");
   #endif
   #endif
@@ -301,11 +301,11 @@ int32_t __box_imtif_x(int32_t argc, int8_t** argv, ServiceArgs* p)
   printf("+------------------------+-----------------------------------------------------+\r\n");
 
   #if __STATIC_LIB__==0
-  #if defined LINUX
+  #if __LINUX__
   dlclose(hmodule);
   #endif
 
-  #if defined XWIN32
+  #if __WIN32__
 	FreeLibrary(hmodule);
   #endif
 	#endif
@@ -332,7 +332,7 @@ void __nmain(int32_t argc, int8_t** argv, void* (*f0)(void*), void* (*f1)(void*)
   memset(_argv, 0, 512);
   readArgs(argc, argv, "--m", _argv);
 
-	#if defined XWIN32
+	#if __WIN32__
 	if ( (_argv[0]=='s') || (_argv[0]=='S') )
 	{
     memset(_argv, 0, 512);
@@ -352,7 +352,7 @@ void __nmain(int32_t argc, int8_t** argv, void* (*f0)(void*), void* (*f1)(void*)
 	#endif
 
 
-	#if defined LINUX
+	#if __LINUX__
 	__cmain(argc, argv);
 	#endif
 }

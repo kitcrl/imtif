@@ -27,7 +27,7 @@
 #if defined __cplusplus
 extern "C"
 #endif
-#if defined XWIN32 || defined WINCE
+#if __WIN32__
 __declspec(dllexport)
 #endif
 int32_t njson(int8_t* s, int32_t sz, int8_t* kv);
@@ -35,7 +35,7 @@ int32_t njson(int8_t* s, int32_t sz, int8_t* kv);
 #if defined __cplusplus
 extern "C"
 #endif
-#if defined XWIN32 || defined WINCE
+#if __WIN32__
 __declspec(dllexport)
 #endif
 int32_t njson_kv(int8_t* s, int32_t cnt, int32_t idx, int8_t* key, int8_t* val);
@@ -43,7 +43,7 @@ int32_t njson_kv(int8_t* s, int32_t cnt, int32_t idx, int8_t* key, int8_t* val);
 #if defined __cplusplus
 extern "C"
 #endif
-#if defined XWIN32 || defined WINCE
+#if __WIN32__
 __declspec(dllexport)
 #endif
 uint8_t njson_check(int8_t* s);
@@ -51,7 +51,7 @@ uint8_t njson_check(int8_t* s);
 #if defined __cplusplus
 extern "C"
 #endif
-#if defined XWIN32 || defined WINCE
+#if __WIN32__
 __declspec(dllexport)
 #endif
 int32_t njson_obj(int8_t* s, int8_t* val);
@@ -59,7 +59,7 @@ int32_t njson_obj(int8_t* s, int8_t* val);
 #if defined __cplusplus
 extern "C"
 #endif
-#if defined XWIN32 || defined WINCE
+#if __WIN32__
 __declspec(dllexport)
 #endif
 int32_t njson_arr(int8_t* s, int8_t* val);
@@ -67,7 +67,7 @@ int32_t njson_arr(int8_t* s, int8_t* val);
 #if defined __cplusplus
 extern "C"
 #endif
-#if defined XWIN32 || defined WINCE
+#if __WIN32__
 __declspec(dllexport)
 #endif
 int32_t njson_str(int8_t* s, int8_t* val);
@@ -75,7 +75,7 @@ int32_t njson_str(int8_t* s, int8_t* val);
 #if defined __cplusplus
 extern "C"
 #endif
-#if defined XWIN32 || defined WINCE
+#if __WIN32__
 __declspec(dllexport)
 #endif
 int32_t njson_n(int8_t* s, int32_t* val);
@@ -84,7 +84,7 @@ int32_t njson_n(int8_t* s, int32_t* val);
 #if defined __cplusplus
 extern "C"
 #endif
-#if defined XWIN32 || defined WINCE
+#if __WIN32__
 __declspec(dllexport)
 #endif
 int32_t NJSON_STR(int8_t* json, int8_t* key, int8_t* v);

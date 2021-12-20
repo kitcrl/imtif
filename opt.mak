@@ -9,11 +9,8 @@ ifeq ($(ONE_SHOT), yes)
 OUTPUT_NAME = libimtif
 endif
 
-COPT += -D__DEBUG__=1
-
 
 PROJ_PATH = .
-COPT += -D__TRIGONOMETRIC__=1
 ifeq ($(CUSTOM), no)
 	COPT += -D__CUSTOM_X_SOCKET__=1
 	COPT += -D__CUSTOM_X_HTTP__=1

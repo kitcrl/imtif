@@ -162,8 +162,6 @@ int32_t njson_kv(int8_t* s, int32_t cnt, int32_t idx, int8_t* key, int8_t* val)
   {
     mode = 0;
 
-    if ( *s == 0 ) break;
-
     for ( ; (*s!='\"') ; s++ ) ; //FF
 
     p = key;
@@ -180,6 +178,7 @@ int32_t njson_kv(int8_t* s, int32_t cnt, int32_t idx, int8_t* key, int8_t* val)
       *p = *s;
     }
     *p = 0;
+
 
     if ( i==idx ) break;
   }

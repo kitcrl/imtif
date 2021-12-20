@@ -31,6 +31,11 @@ OUTPUT_TYPE ?= STATIC
 ################################################################################
 COPT = -O2 -no-integrated-cpp
 #COPT = -g -ggdb -W -Wall -no-integrated-cpp -static-libgcc
+ifeq ($(DEBUG), yes)
+	COPT += -D__DEBUG__=1
+else
+	COPT += -D__DEBUG__=0
+endif
 
 ifeq ($(ARCH_TYPE), x32)
 	TOOLCHAIN_PATH = /usr
@@ -39,6 +44,8 @@ ifeq ($(ARCH_TYPE), x32)
 	COPT += -Dx32
 	COPT += -m32
 	COPT += -DPACKED
+	COPT += -D__LINUX__=1
+	COPT += -D__uCHIP__=0
 endif
 
 ifeq ($(ARCH_TYPE), x64)
@@ -47,6 +54,8 @@ ifeq ($(ARCH_TYPE), x64)
 	XTARGET   = x64
 	COPT += -Dx64
 	COPT += -m64
+	COPT += -D__LINUX__=1
+	COPT += -D__uCHIP__=0
 endif
 
 ifeq ($(ARCH_TYPE), a32) #####
@@ -55,6 +64,8 @@ ifeq ($(ARCH_TYPE), a32) #####
 		TOOLCHAIN_PATH = /usr/local/ext/toolchain/x64/v7/arm-linux-gnueabihf/
 		XCOMPILE- = arm-linux-gnueabihf-
 		XTARGET = hf.a32
+		COPT += -D__LINUX__=1
+		COPT += -D__uCHIP__=0
 		COPT += -DABI_HARD
 		COPT += -mfloat-abi=hard
 	endif
@@ -62,6 +73,8 @@ ifeq ($(ARCH_TYPE), a32) #####
 		TOOLCHAIN_PATH = /usr/local/ext/toolchain/x64/v7/arm-linux-gnueabi/
 		XCOMPILE- = arm-linux-gnueabi-
 		XTARGET = a32
+		COPT += -D__LINUX__=1
+		COPT += -D__uCHIP__=0
 		COPT += -DABI_SOFT
 		COPT += -mfloat-abi=soft
 	endif
@@ -73,15 +86,27 @@ ifeq ($(ARCH_TYPE), a64)
 	XCOMPILE- = aarch64-linux-gnu-
 	ifeq ($(ABI), HARD)
 		XTARGET   = hf.a64
+		COPT += -D__LINUX__=1
+		COPT += -D__uCHIP__=0
 		COPT += -DABI_SOFT
 		COPT += -march=armv8-a
 	endif
 	ifeq ($(ABI), SOFT)
 		XTARGET   = a64
+		COPT += -D__LINUX__=1
+		COPT += -D__uCHIP__=0
 		COPT += -DABI_HARD
 		COPT += -march=armv8-a
 	endif
 endif
+
+ifeq ($(ARCH_TYPE), m32) #####
+	TOOLCHAIN_PATH = /usr/local/ext/toolchain/x64/v7/arm-eabi/
+	XCOMPILE- = arm-eabi-
+	XTARGET = m32
+	COPT += -D__uCHIP__=1
+endif #####
+
 
 TOOLCHAIN_BIN  = $(TOOLCHAIN_PATH)/bin/
 TOOLCHAIN_LIB = $(TOOLCHAIN_PATH)/lib
@@ -103,14 +128,17 @@ AR_OPT = rcs
 C_SUFFIX = .c
 O_SUFFIX = .o
 
+C_SUFFIX = .c
+O_SUFFIX = .o
+
 ifeq ($(OUTPUT_TYPE), SHARED)
 	OUT_SUFFIX = .so
-	COPT += -DSHARED_LIB
+	COPT += -D__STATIC_LIB__=0
 endif
 
 ifeq ($(OUTPUT_TYPE), STATIC)
 	OUT_SUFFIX = .a
-	COPT += -DSTATIC_LIB
+	COPT += -D__STATIC_LIB__=1
 endif
 
 ifeq ($(OUTPUT_TYPE), BINARY)
@@ -141,12 +169,6 @@ COPT += -D__QUEUE__=0
 COPT += -D__STACK__=0
 COPT += -D__JSON__=1
 COPT += -D__SYSQUEUE__=0
-#COPT += -D__TRIGONOMETRIC__=1
-COPT += -DLINUX
-COPT += -DBSD_SOCKET
-COPT += -DPOLLING
-#COPT  += -DRTS
-#COPT  += -DCONSOLE_PRINT
 
 LIBS = -lnsl -lrt
 RM = rm -rf
@@ -234,7 +256,7 @@ OXXS = $(foreach dir, . $(TARGET_OBJ), $(wildcard $(dir)/*$(OXX_SUFFIX)))
 	@echo "################################################################################"
 	$(RM) $(TARGET_OBJ)/$@;
 	$(CC) $(INC) $(COPT) -static -o $(addprefix $(TARGET_OBJ)/, $(notdir $@)) \
-	-fPIC -c $(subst $(O_SUFFIX),$(C_SUFFIX), $@) -lm $(xLIB);
+	-fPIC -c $(subst $(O_SUFFIX),$(C_SUFFIX), $@) -lm;
 	@echo "################################################################################"
 	@echo "#                                                                              #"
 	@echo "#                                                                              #"
@@ -248,7 +270,7 @@ OXXS = $(foreach dir, . $(TARGET_OBJ), $(wildcard $(dir)/*$(OXX_SUFFIX)))
 	@echo "#                                                                              #"
 	@echo "################################################################################"
 	$(CXX) $(INC) $(COPT) -static -o $(addprefix $(TARGET_OBJ)/, $(notdir $@)) \
-	-fpermissive -fPIC -c $(subst $(OXX_SUFFIX),$(CXX_SUFFIX), $@) -lm $(xLIB);
+	-fpermissive -fPIC -c $(subst $(OXX_SUFFIX),$(CXX_SUFFIX), $@) -lm;
 	@echo "################################################################################"
 	@echo "#                                                                              #"
 	@echo "#                                                                              #"
@@ -316,9 +338,6 @@ all:
 	@echo "#"
 	@echo "#"
 	@echo "#  link "$(TARGET_NAME)
-	@echo "#  "$(TARGET_NAME)
-	@echo "#  "$(XTARGET)
-	@echo "#  "$(ARCH_TYPE)
 	@echo "#"
 	@echo "#"
 	@echo "################################################################################"
@@ -350,10 +369,6 @@ dir:
 	mkdir -p $(OUT);
 	mkdir -p $(TARGET_OBJ);
 
-vars:
-	echo $(TARGET_OBJ)
-	echo $(TARGET_NAME)
-
 clean :
 	$(RM)  *.o core;
 	$(RM)  $(TARGET_OBJ)/*.o;
@@ -363,4 +378,4 @@ distclean:
 	$(RM)  *.o core;
 	$(RM)  $(OUT)/*;
 	$(RM)  $(TARGET_OBJ)/*.o;
-	$(RM)  $(OUT)/*.$(OUT_SUFFIX);
+	$(RM)  $(OUT)/*$(OUT_SUFFIX);

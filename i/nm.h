@@ -24,7 +24,7 @@ enum
 #if defined __cplusplus
 extern "C"
 #endif
-#if defined XWIN32 || defined WINCE
+#if __WIN32__
 __declspec(dllexport)
 #endif
 void __nmain(int32_t argc, int8_t** argv, void* (*f0)(void*), void* (*f1)(void*), void* o);
@@ -32,7 +32,7 @@ void __nmain(int32_t argc, int8_t** argv, void* (*f0)(void*), void* (*f1)(void*)
 #if defined __cplusplus
 extern "C"
 #endif
-#if defined XWIN32 || defined WINCE
+#if __WIN32__
 __declspec(dllexport)
 #endif
 void readArgs(int32_t argc, int8_t** argv, int8_t* key, int8_t* value);

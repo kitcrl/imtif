@@ -24,36 +24,14 @@
 #ifndef __COMMON_H_F2DBDC40_6196_4E67_A689_D31A9310BEC0__
 #define __COMMON_H_F2DBDC40_6196_4E67_A689_D31A9310BEC0__
 
-/**
-// XWIN32
-_DEBUG;XWIN32;XEXPORT;IOCP_SOCKET;_IOCP_;__STATIC_LIB___;XWIN32;_WINDOWS;HAVE_SNPRINTF;HAVE_VSNPRINTF
-       XWIN32;XEXPORT;IOCP_SOCKET;_IOCP_;__STATIC_LIB___;XWIN32;_WINDOWS;HAVE_SNPRINTF;HAVE_VSNPRINTF
-
-_DEBUG;XWIN32;XEXPORT;BSD_SOCKET;POLLING;__STATIC_LIB___;XWIN32;_WINDOWS;HAVE_SNPRINTF;HAVE_VSNPRINTF
-       XWIN32;XEXPORT;BSD_SOCKET;POLLING;__STATIC_LIB___;XWIN32;_WINDOWS;HAVE_SNPRINTF;HAVE_VSNPRINTF
-
-**/
-
-
-//#define WIN32_LEAN_AND_MEAN
-
-
-//#if defined WINCE
-//#define POLLING
-//#define BSD_SOCKET
-//#endif
-
 #include <stdio.h>
 #include <stdarg.h>
 #include <stdint.h>
-#if defined LINUX || defined XWIN32
 #include <signal.h>
 #include <sys/types.h>
-#endif
-#if defined LINUX
+#if __LINUX__
 #include <stdlib.h>
 #include <string.h>
-//#include <stropts.h>
 #include <sys/types.h>
 #include <sys/mman.h>
 #include <sys/stat.h>
@@ -78,30 +56,26 @@ _DEBUG;XWIN32;XEXPORT;BSD_SOCKET;POLLING;__STATIC_LIB___;XWIN32;_WINDOWS;HAVE_SN
 #ifndef __USE_GNU
 #define __USE_GNU
 #endif
-#elif defined XWIN32 || defined WINCE
+#endif
+
+#if __WIN32__
 #include <winsock2.h>
 #include <mstcpip.h>
 #include <winreg.h>
 #include <iphlpapi.h>
-#elif defined XWIN32
 #include <sys/timeb.h>
 #include <process.h>
 #endif
 
-#if defined LINUX
+#if __LINUX__
 #include <fcntl.h>
 #include <pthread.h>
-#else
-#if defined XWIN32
-#else
-//#include <sys/filio.h>
-#endif
 #endif
 
 #include <time.h>
 #include <math.h>
 
-#if ( defined XWIN32 || defined WINCE )
+#if __WIN32__
 #include <ws2tcpip.h>
 #endif
 
@@ -116,16 +90,16 @@ _DEBUG;XWIN32;XEXPORT;BSD_SOCKET;POLLING;__STATIC_LIB___;XWIN32;_WINDOWS;HAVE_SN
 #define MAX(x,y)  ((x)<(y)?(y):(x))
 
 
-#if defined LINUX
+#if __LINUX__
 typedef int32_t             SOCKET;
 typedef void *          HINSTANCE;
 typedef void *          HANDLE;
 typedef unsigned long   DWORD;
 typedef void *          HKEY;
 #define MAX_PATH        256
-#elif defined XWIN32
+#endif
 
-#elif defined WINCE
+#if __WIN32__
 typedef TCHAR            tchar;
 #endif
 
@@ -137,27 +111,13 @@ typedef TCHAR            tchar;
 #define ms                  0x400
 #define SEMAPHORE_COUNTER   0x00002000
 
-#if defined XWIN32
+#if __WIN32__
 #pragma comment(lib, "ws2_32.lib")
-#elif defined WINCE
-#pragma comment(lib, "ws2.lib")
 #endif
 
 #define DEFAULT_KEY        7810
 
-#if 0
-#if defined LINUX
-#define HIWORD(x)      ((x&0xFFFF0000)>>16)
-#define LOWORD(x)       (x&0x0000FFFF)
-#endif
-#define HIDWORD(x)      ((x&0xFFFFFFFF00000000)>>32)
-#define LODWORD(x)       (x&0x00000000FFFFFFFF)
-#define SETWORD(x,y)   (((x&0x0000FFFF)<<16)|(y&0x0000FFFF))
-#define SETDWORD(x,y)  (((x&0x00000000FFFFFFFF)<<32)|(y&0x00000000FFFFFFFF))
-#endif
-
-
-#if defined LINUX
+#if __LINUX__
 #define MAKEWORD(a,b)      ((a&0x00FF)|((b&0x00FF)<<8))
 #define MAKELONG(a,b)      ((a&0x0000FFFF)|((b&0x0000ffff)<<16))
 #define LOWORD(l)           (l&0x0000FFFF)
@@ -246,38 +206,42 @@ while ( i>=0 ) {               \
 #define   HSTR_TO_HEX(a)    ((__HSTR_TO_HEX(*(a))<<4)|__HSTR_TO_HEX(*(a+1)))
 
 
-#if defined XWIN32 || defined WINCE
+#if __WIN32__
 #define xLOCK_INIT(crit)       InitializeCriticalSection((CRITICAL_SECTION*)(crit))
-#elif defined LINUX
+#endif
+
+#if __LINUX__
 #define xLOCK_INIT(crit)       pthread_mutex_init((pthread_mutex_t*)(crit), 0);
 #endif
 
-#if defined XWIN32 || defined WINCE
+#if __WIN32__
 #define xLOCK_FINAL(crit)      DeleteCriticalSection((CRITICAL_SECTION*)(crit));
-#elif defined LINUX
+#endif
+#if __LINUX__
 #define xLOCK_FINAL(crit)      pthread_mutex_destroy((pthread_mutex_t*)(crit));
 #endif
 
-#if defined XWIN32 || defined WINCE
+#if __WIN32__
 #define xLOCK(crit)            EnterCriticalSection((CRITICAL_SECTION*)(crit));
-#elif defined LINUX
+#endif
+#if __LINUX__
 #define xLOCK(crit)            pthread_mutex_lock((pthread_mutex_t*)(crit));
 #endif
 
 
-#if defined XWIN32 || defined WINCE
+#if __WIN32__
 #define xUNLOCK(crit)          LeaveCriticalSection((CRITICAL_SECTION*)(crit));
-#elif defined LINUX
+#endif
+#if __LINUX__
 #define xUNLOCK(crit)          pthread_mutex_unlock((pthread_mutex_t*)(crit));
 #endif
 
 
 
-#if defined XWIN32
+#if __WIN32__
 #define xTHREAD_CREATE(f,arg,id,r)  (r=_beginthreadex(0,0,(uint32_t(__stdcall*)(void*))f,(void*)arg,0,(uint32_t*)id))
-#elif defined WINCE
-#define xTHREAD_CREATE(f,arg,id,r)  (r=CreateThread(0,0,(LPTHREAD_START_ROUTINE)f,(void*)arg,0,(LPDWORD)&id))
-#elif defined LINUX
+#endif
+#if __LINUX__
 #define xTHREAD_CREATE(f,arg,id,r) {                                    \
 pthread_attr_t tattr = {0};                                             \
 pthread_attr_init(&tattr);                                              \
@@ -288,19 +252,19 @@ pthread_attr_destroy(&tattr);                                           \
 #endif
 
 
-#if defined XWIN32
+#if __WIN32__
 #define xTHREAD_EXIT(a,r)                  {if(r) CloseHandle(r);_endthreadex(a);}
-#elif defined WINCE
-#define xTHREAD_EXIT(a,r)                  {if(r) CloseHandle(r);ExitThread(a);}
-#elif defined LINUX
+#endif
+
+#if __LINUX__
 #define xTHREAD_EXIT(a,r)                  /*pthread_exit(a)*/
 #endif
 
 //
-//#if defined XWIN32 || defined WINCE
+//#if __WIN32__
 //#define xSLEEP(a)          Sleep((uint32_t)a);
 //#endif
-//#if defined LINUX
+//#if __LINUX__
 //#define xSLEEP(a)                 \
 //{                                 \
 //struct timeval v = {0};           \
@@ -311,10 +275,10 @@ pthread_attr_destroy(&tattr);                                           \
 //#endif
 
 
-#if defined XWIN32 || defined WINCE
+#if __WIN32__
 #define xSLEEP(a)          Sleep((uint32_t)a)
 #endif
-#if defined LINUX
+#if __LINUX__
 #define xSLEEP(a)               \
 {                               \
 struct timeval v = {0};         \
@@ -338,10 +302,10 @@ xSLEEP(1);                                 \
 
 
 
-#if (defined XWIN32 || defined WINCE)
+#if __WIN32__
 #pragma pack(1)
 #endif
-#if defined LINUX
+#if __LINUX__
 __attribute__((packed))
 #endif
 typedef struct xREG
@@ -351,7 +315,7 @@ typedef struct xREG
   uint32_t INT;
 }
 xREG;
-#if (defined XWIN32 || defined WINCE)
+#if __WIN32__
 #pragma pack()
 #endif
 

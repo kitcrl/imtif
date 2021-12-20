@@ -16,11 +16,11 @@
 #endif
 
 
-#if defined XWIN32
+#if __WIN32__
 #include <Windows.h>
 #endif
 
-#if defined LINUX
+#if __LINUX__
 #include <dlfcn.h>
 #endif
 
@@ -31,13 +31,13 @@ extern int32_t mtifSetMessage(void* h, void* m, void* w, void* l);
 extern int32_t mtifPutMessage(void* h, void* m, void* w, void* l);
 #endif
 
-#if defined LINUX
+#if __LINUX__
 #define __SYSTEM_SERIAL_PORT__             ""
 //#define __SYSTEM_LIBRARY                   "code.X.x32.so"
 //#define __SYSTEM_LIBRARY_SIFR              "code.X.sifr.x32.so"
 #endif
 
-#if defined XWIN32
+#if __WIN32__
 #define __SYSTEM_SERIAL_PORT__             "COM1"
 //#define __SYSTEM_LIBRARY                   "code.X.x86.dll"
 //#define __SYSTEM_LIBRARY_SIFR              "code.X.sifr.x86.dll"
@@ -187,11 +187,11 @@ int32_t modulus(IMTIF* imtif, int8_t* libpath)
   #if __STATIC_LIB__==0
   if ( imtif->hmodule == 0 )
   {
-    #if defined LINUX
+    #if __LINUX__
     imtif->hmodule = dlopen(libpath, RTLD_LAZY);
     #endif
 
-    #if defined XWIN32
+    #if __WIN32__
     imtif->hmodule = LoadLibrary(libpath);
     #endif
   }
@@ -200,13 +200,13 @@ int32_t modulus(IMTIF* imtif, int8_t* libpath)
   printf(" %-16s:%6d |\r\n",__FUNCTION__,__LINE__);
   #endif
 
-  #if defined LINUX
+  #if __LINUX__
   if ( imtif->setMessage == 0 )	imtif->setMessage   = dlsym(imtif->hmodule, "mtifSetMessage");
   if ( imtif->getMessage == 0 )	imtif->getMessage   = dlsym(imtif->hmodule, "mtifGetMessage");
   if ( imtif->putMessage == 0 )	imtif->putMessage   = dlsym(imtif->hmodule, "mtifPutMessage");
   #endif
 
-  #if defined XWIN32
+  #if __WIN32__
   if ( imtif->getMessage == 0 )	*(FARPROC*)&imtif->getMessage   = GetProcAddress(imtif->hmodule, "mtifGetMessage");
   if ( imtif->setMessage == 0 )	*(FARPROC*)&imtif->setMessage   = GetProcAddress(imtif->hmodule, "mtifSetMessage");
   if ( imtif->putMessage == 0 )	*(FARPROC*)&imtif->putMessage   = GetProcAddress(imtif->hmodule, "mtifPutMessage");
@@ -260,10 +260,10 @@ int32_t unmodulus(IMTIF* imtif)
   #endif
 
   #if __STATIC_LIB__==0
-  #if defined LINUX
+  #if __LINUX__
   if ( imtif->hmodule ) dlclose(imtif->hmodule);
   #endif
-  #if defined XWIN32
+  #if __WIN32__
   if ( imtif->hmodule ) FreeLibrary(imtif->hmodule);
   #endif
   #endif
@@ -375,7 +375,7 @@ void* __socket_callback(void* h, void* msg, void* wparam, void* lparam)
 #if defined __cplusplus
 extern "C"
 #endif
-#if defined XWIN32 || defined WINCE
+#if __WIN32__
 __declspec(dllexport)
 #endif
 int32_t __socket_fdset(void* h, int32_t fd, int8_t* b, int32_t sz, void* moreinfo, void* o)
@@ -387,7 +387,7 @@ int32_t __socket_fdset(void* h, int32_t fd, int8_t* b, int32_t sz, void* moreinf
 #if defined __cplusplus
 extern "C"
 #endif
-#if defined XWIN32 || defined WINCE
+#if __WIN32__
 __declspec(dllexport)
 #endif
 int32_t __socket_fd(void* h, int32_t fd, int8_t* b, int32_t sz, void* moreinfo, void* o)
@@ -400,7 +400,7 @@ int32_t __socket_fd(void* h, int32_t fd, int8_t* b, int32_t sz, void* moreinfo, 
 #if defined __cplusplus
 extern "C"
 #endif
-#if defined XWIN32 || defined WINCE
+#if __WIN32__
 __declspec(dllexport)
 #endif
 int32_t __socket_read(void* h, int32_t fd, int8_t* b, int32_t sz, void* moreinfo, void* o)
@@ -417,7 +417,7 @@ int32_t __socket_read(void* h, int32_t fd, int8_t* b, int32_t sz, void* moreinfo
 #if defined __cplusplus
 extern "C"
 #endif
-#if defined XWIN32 || defined WINCE
+#if __WIN32__
 __declspec(dllexport)
 #endif
 int32_t __socket_readfrom(void* h, int32_t fd, int8_t* b, int32_t sz, void* moreinfo, void* o)
@@ -433,7 +433,7 @@ int32_t __socket_readfrom(void* h, int32_t fd, int8_t* b, int32_t sz, void* more
 #if defined __cplusplus
 extern "C"
 #endif
-#if defined XWIN32 || defined WINCE
+#if __WIN32__
 __declspec(dllexport)
 #endif
 int32_t __socket_write(void* h, int32_t fd, int8_t* b, int32_t sz, void* moreinfo, void* o)
@@ -449,7 +449,7 @@ int32_t __socket_write(void* h, int32_t fd, int8_t* b, int32_t sz, void* moreinf
 #if defined __cplusplus
 extern "C"
 #endif
-#if defined XWIN32 || defined WINCE
+#if __WIN32__
 __declspec(dllexport)
 #endif
 int32_t __socket_writeto(void* h, int32_t fd, int8_t* b, int32_t sz, void* moreinfo, void* o)
@@ -473,7 +473,7 @@ int32_t __socket_writeto(void* h, int32_t fd, int8_t* b, int32_t sz, void* morei
 #if defined __cplusplus
 extern "C"
 #endif
-#if defined XWIN32 || defined WINCE
+#if __WIN32__
 __declspec(dllexport)
 #endif
 int32_t __socket_open(void** h, int8_t* argv, int32_t (*f[])(void*,int32_t,int8_t*,int32_t,void*,void*), void* o)
@@ -496,6 +496,9 @@ int32_t __socket_open(void** h, int8_t* argv, int32_t (*f[])(void*,int32_t,int8_
   if ( e > 0 ) sprintf(&_iargv[_iap], "%s\n", _argv);
   else sprintf(&_iargv[_iap], "\n", _argv);
   _iap = strlen(_iargv);
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
   if ( modulus(imtif, _argv) < 0 ) return 0xEF000001;
 
@@ -503,11 +506,17 @@ int32_t __socket_open(void** h, int8_t* argv, int32_t (*f[])(void*,int32_t,int8_
   if ( e > 0 ) sprintf(&_iargv[_iap], "%s\n", _argv);
   else sprintf(&_iargv[_iap], "\n", _argv);
   _iap = strlen(_iargv);
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
   e = NJSON_STR(argv, "SECRET_KEY_1", _argv);
   if ( e > 0 ) sprintf(&_iargv[_iap], "%s\n", _argv);
   else sprintf(&_iargv[_iap], "\n", _argv);
   _iap = strlen(_iargv);
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
   e = imtif->setMessage(&imtif->hdl, (void*)MAKELONG(INIT,MTIF), _iargv, 0);
   e = imtif->setMessage(&imtif->h, (void*)MAKELONG(INIT,XSOCKET), (void*)imtif->hdl,0);
@@ -526,21 +535,33 @@ int32_t __socket_open(void** h, int8_t* argv, int32_t (*f[])(void*,int32_t,int8_
     imtif->pb = (int8_t*)calloc(atoi(_argv), sizeof(int8_t));
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_BUFFER_PTR,XSOCKET), (void*)imtif->pb,(void*)atoi(_argv));
   }
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
   if ( NJSON_STR(argv, "IP", _argv)<0 )
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_IP,XSOCKET), (void*)"127.0.0.1",(void*)strlen("XXXXXXXXX"));
   else
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_IP,XSOCKET), (void*)_argv,(void*)strlen(_argv));
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
   if ( NJSON_STR(argv, "PORT", _argv)<0 )
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_PORT, XSOCKET), (void*)"7810",(void*)strlen("XXXX"));
   else
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_PORT, XSOCKET), (void*)_argv,(void*)strlen(_argv));
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
   if ( NJSON_STR(argv, "CSTYPE", _argv)<0 )
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_CSTYPE, XSOCKET), (void*)"SERVER",(void*)strlen("XXXXXX"));
   else
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_CSTYPE, XSOCKET), (void*)_argv,(void*)strlen(_argv));
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
   if ( NJSON_STR(argv, "MAX_FD", _argv)<0 )
   {
@@ -552,31 +573,49 @@ int32_t __socket_open(void** h, int8_t* argv, int32_t (*f[])(void*,int32_t,int8_
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_MAX_FD, XSOCKET), (void*)_argv,(void*)strlen(_argv));
     imtif->icd.fdset.max = atoi(_argv);
   }
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
   if ( NJSON_STR(argv, "SYNC", _argv)<0 )
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_SYNC, XSOCKET), (void*)"DISABLE",(void*)strlen("XXXXXXX"));
   else
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_SYNC, XSOCKET), (void*)_argv,(void*)strlen(_argv));
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
   if ( NJSON_STR(argv, "BLOCK", _argv)<0 )
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_BLOCK, XSOCKET), (void*)"DISABLE",(void*)strlen("XXXXXXX"));
   else
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_BLOCK, XSOCKET), (void*)_argv,(void*)strlen(_argv));
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
   if ( NJSON_STR(argv, "TIMEOUT", _argv)<0 )
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_TIMEOUT, XSOCKET), (void*)"0",(void*)strlen("X"));
   else
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_TIMEOUT, XSOCKET), (void*)_argv,(void*)strlen(_argv));
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
   if ( NJSON_STR(argv, "PROTOCOL", _argv)<0 )
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_PROTO, XSOCKET), (void*)"TCP",(void*)strlen("XXX"));
   else
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_PROTO, XSOCKET), (void*)_argv,(void*)strlen(_argv));
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
   if ( NJSON_STR(argv, "CASTTYPE", _argv)<0 )
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_CASTTYPE, XSOCKET), (void*)"UNICAST",(void*)strlen("XXXXXXX"));
   else
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_CASTTYPE, XSOCKET), (void*)_argv,(void*)strlen(_argv));
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
   e = imtif->setMessage( imtif->h, (void*)MAKELONG(SYSTEM_CALLBACK, XSOCKET),__socket_callback, imtif);
   imtif->fd = e = imtif->setMessage( imtif->h, (void*)MAKELONG(ENABLE,XSOCKET),0,0);
@@ -587,7 +626,7 @@ int32_t __socket_open(void** h, int8_t* argv, int32_t (*f[])(void*,int32_t,int8_
 #if defined __cplusplus
 extern "C"
 #endif
-#if defined XWIN32 || defined WINCE
+#if __WIN32__
 __declspec(dllexport)
 #endif
 int32_t __socket_close(void** h)
@@ -714,7 +753,7 @@ void* __http_callback(void* h, void* msg, void* wparam, void* lparam)
 #if defined __cplusplus
 extern "C"
 #endif
-#if defined XWIN32 || defined WINCE
+#if __WIN32__
 __declspec(dllexport)
 #endif
 int32_t __http_fdset(void* h, int32_t fd, int8_t* b, int32_t sz, void* moreinfo, void* o)
@@ -726,7 +765,7 @@ int32_t __http_fdset(void* h, int32_t fd, int8_t* b, int32_t sz, void* moreinfo,
 #if defined __cplusplus
 extern "C"
 #endif
-#if defined XWIN32 || defined WINCE
+#if __WIN32__
 __declspec(dllexport)
 #endif
 int32_t __http_fd(void* h, int32_t fd, int8_t* b, int32_t sz, void* moreinfo, void* o)
@@ -740,7 +779,7 @@ int32_t __http_fd(void* h, int32_t fd, int8_t* b, int32_t sz, void* moreinfo, vo
 #if defined __cplusplus
 extern "C"
 #endif
-#if defined XWIN32 || defined WINCE
+#if __WIN32__
 __declspec(dllexport)
 #endif
 int32_t __http_read(void* h, int32_t fd, int8_t* b, int32_t sz, void* moreinfo, void* o)
@@ -757,7 +796,7 @@ int32_t __http_read(void* h, int32_t fd, int8_t* b, int32_t sz, void* moreinfo, 
 #if defined __cplusplus
 extern "C"
 #endif
-#if defined XWIN32 || defined WINCE
+#if __WIN32__
 __declspec(dllexport)
 #endif
 int32_t __http_write(void* h, int32_t fd, int8_t* b, int32_t sz, void* moreinfo, void* o)
@@ -773,7 +812,7 @@ int32_t __http_write(void* h, int32_t fd, int8_t* b, int32_t sz, void* moreinfo,
 #if defined __cplusplus
 extern "C"
 #endif
-#if defined XWIN32 || defined WINCE
+#if __WIN32__
 __declspec(dllexport)
 #endif
 int32_t __http_open(void** h, int8_t* argv, int32_t (*f[])(void*,int32_t,int8_t*,int32_t,void*,void*), void* o)
@@ -799,6 +838,9 @@ int32_t __http_open(void** h, int8_t* argv, int32_t (*f[])(void*,int32_t,int8_t*
   if ( e > 0 ) sprintf(&_iargv[_iap], "%s\n", _argv);
   else sprintf(&_iargv[_iap], "\n", _argv);
   _iap = strlen(_iargv);
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
   if ( modulus(imtif, _argv) < 0 ) return 0xEF000001;
 
@@ -807,11 +849,17 @@ int32_t __http_open(void** h, int8_t* argv, int32_t (*f[])(void*,int32_t,int8_t*
   if ( e > 0 ) sprintf(&_iargv[_iap], "%s\n", _argv);
   else sprintf(&_iargv[_iap], "\n", _argv);
   _iap = strlen(_iargv);
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
   e = NJSON_STR(argv, "SECRET_KEY_1", _argv);
   if ( e > 0 ) sprintf(&_iargv[_iap], "%s\n", _argv);
   else sprintf(&_iargv[_iap], "\n", _argv);
   _iap = strlen(_iargv);
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
   e = imtif->setMessage(&imtif->hdl, (void*)MAKELONG(INIT,MTIF), _iargv, 0);
 
@@ -831,21 +879,33 @@ int32_t __http_open(void** h, int8_t* argv, int32_t (*f[])(void*,int32_t,int8_t*
     imtif->pb = (int8_t*)calloc(atoi(_argv), sizeof(int8_t));
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_BUFFER_PTR,XHTTP), (void*)imtif->pb,(void*)atoi(_argv));
   }
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
   if ( NJSON_STR(argv, "IP", _argv)<0 )
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_IP,XHTTP), (void*)"127.0.0.1",(void*)strlen("XXXXXXXXX"));
   else
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_IP,XHTTP), (void*)_argv,(void*)strlen(_argv));
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
   if ( NJSON_STR(argv, "PORT", _argv)<0 )
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_PORT, XHTTP), (void*)"80",(void*)strlen("XX"));
   else
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_PORT, XHTTP), (void*)_argv,(void*)strlen(_argv));
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
   if ( NJSON_STR(argv, "CSTYPE", _argv)<0 )
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_CSTYPE, XHTTP), (void*)"CLIENT",(void*)strlen("XXXXXX"));
   else
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_CSTYPE, XHTTP), (void*)_argv,(void*)strlen(_argv));
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
   if ( NJSON_STR(argv, "MAX_FD", _argv)<0 )
   {
@@ -857,46 +917,73 @@ int32_t __http_open(void** h, int8_t* argv, int32_t (*f[])(void*,int32_t,int8_t*
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_MAX_FD, XHTTP), (void*)_argv,(void*)strlen(_argv));
     imtif->icd.fdset.max = atoi(_argv);
   }
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
   if ( NJSON_STR(argv, "SYNC", _argv)<0 )
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_SYNC, XHTTP), (void*)"DISABLE",(void*)strlen("XXXXXXX"));
   else
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_SYNC, XHTTP), (void*)_argv,(void*)strlen(_argv));
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
   if ( NJSON_STR(argv, "BLOCK", _argv)<0 )
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_BLOCK, XHTTP), (void*)"DISABLE",(void*)strlen("XXXXXXX"));
   else
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_BLOCK, XHTTP), (void*)_argv,(void*)strlen(_argv));
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
   if ( NJSON_STR(argv, "TIMEOUT", _argv)<0 )
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_TIMEOUT, XHTTP), (void*)"0",(void*)strlen("X"));
   else
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_TIMEOUT, XHTTP), (void*)_argv,(void*)strlen(_argv));
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
   if ( NJSON_STR(argv, "PROTOCOL", _argv)<0 )
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_PROTO, XHTTP), (void*)"TCP",(void*)strlen("XXX"));
   else
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_PROTO, XHTTP), (void*)_argv,(void*)strlen(_argv));
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
   if ( NJSON_STR(argv, "CASTTYPE", _argv)<0 )
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_CASTTYPE, XHTTP), (void*)"UNICAST",(void*)strlen("XXXXXXX"));
   else
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_CASTTYPE, XHTTP), (void*)_argv,(void*)strlen(_argv));
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
   if ( NJSON_STR(argv, "URL", _argv)<0 )
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_URL         , XHTTP), (void*)"http://127.0.0.1",(void*)strlen("XXXXXXXXXXXXXXXX"));
   else 
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_URL         , XHTTP), (void*)_argv,(void*)strlen(_argv));
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
   if ( NJSON_STR(argv, "URI", _argv)<0 )
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_URI         , XHTTP), (void*)"/",(void*)strlen("X"));
   else 
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_URI         , XHTTP), (void*)_argv,(void*)strlen(_argv));
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
   if ( NJSON_STR(argv, "CONTENTS", _argv)<0 )
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_CONTENTS    , XHTTP), (void*)0,(void*)0);
   else 
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_CONTENTS    , XHTTP), (void*)_argv,(void*)strlen(_argv));
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
   e = imtif->setMessage( imtif->h, (void*)MAKELONG(SYSTEM_CALLBACK, XHTTP),__http_callback, imtif);
   e = imtif->setMessage( imtif->h, (void*)MAKELONG(REQUEST,XHTTP), (void*)0,(void*)0);
@@ -906,7 +993,7 @@ int32_t __http_open(void** h, int8_t* argv, int32_t (*f[])(void*,int32_t,int8_t*
 #if defined __cplusplus
 extern "C"
 #endif
-#if defined XWIN32 || defined WINCE
+#if __WIN32__
 __declspec(dllexport)
 #endif
 int32_t __http_close(void** h)
@@ -1029,7 +1116,7 @@ void* __httpd_callback(void* h, void* msg, void* wparam, void* lparam)
 #if defined __cplusplus
 extern "C"
 #endif
-#if defined XWIN32 || defined WINCE
+#if __WIN32__
 __declspec(dllexport)
 #endif
 int32_t __httpd_fdset(void* h, int32_t fd, int8_t* b, int32_t sz, void* moreinfo, void* o)
@@ -1041,7 +1128,7 @@ int32_t __httpd_fdset(void* h, int32_t fd, int8_t* b, int32_t sz, void* moreinfo
 #if defined __cplusplus
 extern "C"
 #endif
-#if defined XWIN32 || defined WINCE
+#if __WIN32__
 __declspec(dllexport)
 #endif
 int32_t __httpd_fd(void* h, int32_t fd, int8_t* b, int32_t sz, void* moreinfo, void* o)
@@ -1055,7 +1142,7 @@ int32_t __httpd_fd(void* h, int32_t fd, int8_t* b, int32_t sz, void* moreinfo, v
 #if defined __cplusplus
 extern "C"
 #endif
-#if defined XWIN32 || defined WINCE
+#if __WIN32__
 __declspec(dllexport)
 #endif
 int32_t __httpd_read(void* h, int32_t fd, int8_t* b, int32_t sz, void* moreinfo, void* o)
@@ -1071,7 +1158,7 @@ int32_t __httpd_read(void* h, int32_t fd, int8_t* b, int32_t sz, void* moreinfo,
 #if defined __cplusplus
 extern "C"
 #endif
-#if defined XWIN32 || defined WINCE
+#if __WIN32__
 __declspec(dllexport)
 #endif
 int32_t __httpd_write(void* h, int32_t fd, int8_t* b, int32_t sz, void* moreinfo, void* o)
@@ -1087,7 +1174,7 @@ int32_t __httpd_write(void* h, int32_t fd, int8_t* b, int32_t sz, void* moreinfo
 #if defined __cplusplus
 extern "C"
 #endif
-#if defined XWIN32 || defined WINCE
+#if __WIN32__
 __declspec(dllexport)
 #endif
 int32_t __httpd_open(void** h, int8_t* argv, int32_t (*f[])(void*,int32_t,int8_t*,int32_t,void*,void*), void* o)
@@ -1119,6 +1206,9 @@ int32_t __httpd_open(void** h, int8_t* argv, int32_t (*f[])(void*,int32_t,int8_t
   if ( e > 0 ) sprintf(&_iargv[_iap], "%s\n", _argv);
   else sprintf(&_iargv[_iap], "\n", _argv);
   _iap = strlen(_iargv);
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
   #if __DEBUG__
   printf(" %-16s:%6d | -> %s\r\n",__FUNCTION__,__LINE__, _argv);
@@ -1129,11 +1219,17 @@ int32_t __httpd_open(void** h, int8_t* argv, int32_t (*f[])(void*,int32_t,int8_t
   if ( e > 0 ) sprintf(&_iargv[_iap], "%s\n", _argv);
   else sprintf(&_iargv[_iap], "\n", _argv);
   _iap = strlen(_iargv);
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
   e = NJSON_STR(argv, "SECRET_KEY_1", _argv);
   if ( e > 0 ) sprintf(&_iargv[_iap], "%s\n", _argv);
   else sprintf(&_iargv[_iap], "\n", _argv);
   _iap = strlen(_iargv);
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
   #if __DEBUG__
   printf(" %-16s:%6d |\r\n",__FUNCTION__,__LINE__);
@@ -1160,7 +1256,7 @@ int32_t __httpd_open(void** h, int8_t* argv, int32_t (*f[])(void*,int32_t,int8_t
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_BUFFER_PTR,XHTTPD), (void*)imtif->pb,(void*)atoi(_argv));
   }
   #if __DEBUG__
-  printf(" %-16s:%6d |\r\n",__FUNCTION__,__LINE__);
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
   #endif
 
   if ( NJSON_STR(argv, "IP", _argv)<0 )
@@ -1168,23 +1264,17 @@ int32_t __httpd_open(void** h, int8_t* argv, int32_t (*f[])(void*,int32_t,int8_t
   else
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_IP,XHTTPD), (void*)_argv,(void*)strlen(_argv));
   #if __DEBUG__
-  printf(" %-16s:%6d |\r\n",__FUNCTION__,__LINE__);
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
   #endif
 
   if ( NJSON_STR(argv, "PORT", _argv)<0 )
   {
-  #if __DEBUG__
-  printf(" %-16s:%6d |\r\n",__FUNCTION__,__LINE__);
-  #endif
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_PORT, XHTTPD), (void*)"80",(void*)strlen("XXX"));
-  #if __DEBUG__
-  printf(" %-16s:%6d |\r\n",__FUNCTION__,__LINE__);
-  #endif
   }
   else
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_PORT, XHTTPD), (void*)_argv,(void*)strlen(_argv));
   #if __DEBUG__
-  printf(" %-16s:%6d |\r\n",__FUNCTION__,__LINE__);
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
   #endif
 
   if ( NJSON_STR(argv, "CSTYPE", _argv)<0 )
@@ -1192,7 +1282,7 @@ int32_t __httpd_open(void** h, int8_t* argv, int32_t (*f[])(void*,int32_t,int8_t
   else
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_CSTYPE, XHTTPD), (void*)_argv,(void*)strlen(_argv));
   #if __DEBUG__
-  printf(" %-16s:%6d |\r\n",__FUNCTION__,__LINE__);
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
   #endif
 
   if ( NJSON_STR(argv, "MAX_FD", _argv)<0 )
@@ -1206,56 +1296,67 @@ int32_t __httpd_open(void** h, int8_t* argv, int32_t (*f[])(void*,int32_t,int8_t
     imtif->icd.fdset.max = atoi(_argv);
   }
   #if __DEBUG__
-  printf(" %-16s:%6d |\r\n",__FUNCTION__,__LINE__);
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
   #endif
 
   if ( NJSON_STR(argv, "SYNC", _argv)<0 )
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_SYNC, XHTTPD), (void*)"DISABLE",(void*)strlen("XXXXXXX"));
   else
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_SYNC, XHTTPD), (void*)_argv,(void*)strlen(_argv));
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
   if ( NJSON_STR(argv, "BLOCK", _argv)<0 )
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_BLOCK, XHTTPD), (void*)"DISABLE",(void*)strlen("XXXXXXX"));
   else
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_BLOCK, XHTTPD), (void*)_argv,(void*)strlen(_argv));
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
   if ( NJSON_STR(argv, "TIMEOUT", _argv)<0 )
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_TIMEOUT, XHTTPD), (void*)"0",(void*)strlen("X"));
   else
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_TIMEOUT, XHTTPD), (void*)_argv,(void*)strlen(_argv));
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
   if ( NJSON_STR(argv, "PROTOCOL", _argv)<0 )
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_PROTO, XHTTPD), (void*)"TCP",(void*)strlen("XXX"));
   else
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_PROTO, XHTTPD), (void*)_argv,(void*)strlen(_argv));
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
   if ( NJSON_STR(argv, "CASTTYPE", _argv)<0 )
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_CASTTYPE, XHTTPD), (void*)"UNICAST",(void*)strlen("XXXXXXX"));
   else
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_CASTTYPE, XHTTPD), (void*)_argv,(void*)strlen(_argv));
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
   if ( NJSON_STR(argv, "HOME", _argv)<0 )
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_HOME, XHTTPD), (void*)"/",(void*)strlen("X"));
   else 
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_HOME, XHTTPD), (void*)_argv,(void*)strlen(_argv));
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
   if ( NJSON_STR(argv, "INDEX", _argv)<0 )
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_INDEX, XHTTPD), (void*)"index.html",(void*)strlen("XXXXXXXXXX"));
   else 
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_INDEX, XHTTPD), (void*)_argv,(void*)strlen(_argv));
   #if __DEBUG__
-  printf(" %-16s:%6d |\r\n",__FUNCTION__,__LINE__);
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
   #endif
 
   e = imtif->setMessage( imtif->h, (void*)MAKELONG(SYSTEM_CALLBACK,XHTTPD),__httpd_callback, imtif);
-  #if __DEBUG__
-  printf(" %-16s:%6d |\r\n",__FUNCTION__,__LINE__);
-  #endif
-
   imtif->fd = e = imtif->setMessage( imtif->h, (void*)MAKELONG(ENABLE,XHTTPD), 0,0);
-  #if __DEBUG__
-  printf(" %-16s:%6d |\r\n",__FUNCTION__,__LINE__);
-  #endif
 
   return e;
 }
@@ -1263,7 +1364,7 @@ int32_t __httpd_open(void** h, int8_t* argv, int32_t (*f[])(void*,int32_t,int8_t
 #if defined __cplusplus
 extern "C"
 #endif
-#if defined XWIN32 || defined WINCE
+#if __WIN32__
 __declspec(dllexport)
 #endif
 int32_t __httpd_close(void** h)
@@ -1316,7 +1417,7 @@ int32_t __httpd_close(void** h)
 #if defined __cplusplus
 extern "C"
 #endif
-#if defined XWIN32 || defined WINCE
+#if __WIN32__
 __declspec(dllexport)
 #endif
 int32_t __httpsd_write(void* h, int32_t fd, int8_t* b, int32_t sz, void* moreinfo, void* o)
@@ -1345,7 +1446,7 @@ void* __httpsd_accepter(void* h, int32_t fd, int8_t* b, int32_t sz, void* morein
 #if defined __cplusplus
 extern "C"
 #endif
-#if defined XWIN32 || defined WINCE
+#if __WIN32__
 __declspec(dllexport)
 #endif
 void* __httpsd_closer(void* h, int32_t fd, int8_t* b, int32_t sz, void* moreinfo, void* o)
@@ -1381,7 +1482,7 @@ void* __httpsd_closer(void* h, int32_t fd, int8_t* b, int32_t sz, void* moreinfo
 #if defined __cplusplus
 extern "C"
 #endif
-#if defined XWIN32 || defined WINCE
+#if __WIN32__
 __declspec(dllexport)
 #endif
 void* __httpsd_writer(void* h, int32_t fd, int8_t* b, int32_t sz, void* moreinfo, void* o)
@@ -1402,7 +1503,7 @@ void* __httpsd_writer(void* h, int32_t fd, int8_t* b, int32_t sz, void* moreinfo
 #if defined __cplusplus
 extern "C"
 #endif
-#if defined XWIN32 || defined WINCE
+#if __WIN32__
 __declspec(dllexport)
 #endif
 void* __httpsd_reader(void* h, int32_t fd, int8_t* b, int32_t sz, void* moreinfo, void* o)
@@ -1471,7 +1572,7 @@ void* __httpsd_reader(void* h, int32_t fd, int8_t* b, int32_t sz, void* moreinfo
 #if defined __cplusplus
 extern "C"
 #endif
-#if defined XWIN32 || defined WINCE
+#if __WIN32__
 __declspec(dllexport)
 #endif
 void* __httpsd_accept(void* h, void* msg, void* wparam, void* lparam)
@@ -1516,7 +1617,7 @@ void* __httpsd_accept(void* h, void* msg, void* wparam, void* lparam)
 #if defined __cplusplus
 extern "C"
 #endif
-#if defined XWIN32 || defined WINCE
+#if __WIN32__
 __declspec(dllexport)
 #endif
 void* __httpsd_accept(void* h, void* msg, void* wparam, void* lparam)
@@ -1561,7 +1662,7 @@ void* __httpsd_accept(void* h, void* msg, void* wparam, void* lparam)
 #if defined __cplusplus
 extern "C"
 #endif
-#if defined XWIN32 || defined WINCE
+#if __WIN32__
 __declspec(dllexport)
 #endif
 int32_t __httpsd_pre_open(void* h, int8_t* argv)
@@ -1570,7 +1671,7 @@ int32_t __httpsd_pre_open(void* h, int8_t* argv)
   IMTIF* imtif = (IMTIF*)h;
   int8_t  _argv[2][2048] = {0};
 
-  //#if defined LINUX
+  //#if __LINUX__
   //if( !SSL_library_init() ) return 0xEFFFFFFF;
   //SSL_load_error_strings();
   //OpenSSL_add_all_algorithms();
@@ -1600,7 +1701,7 @@ int32_t __httpsd_pre_open(void* h, int8_t* argv)
 #if defined __cplusplus
 extern "C"
 #endif
-#if defined XWIN32 || defined WINCE
+#if __WIN32__
 __declspec(dllexport)
 #endif
 int32_t __httpsd_pre_close(void* h)
@@ -1726,7 +1827,7 @@ void* __httpsd_callback(void* h, void* msg, void* wparam, void* lparam)
 #if defined __cplusplus
 extern "C"
 #endif
-#if defined XWIN32 || defined WINCE
+#if __WIN32__
 __declspec(dllexport)
 #endif
 int32_t __httpsd_fdset(void* h, int32_t fd, int8_t* b, int32_t sz, void* moreinfo, void* o)
@@ -1738,7 +1839,7 @@ int32_t __httpsd_fdset(void* h, int32_t fd, int8_t* b, int32_t sz, void* moreinf
 #if defined __cplusplus
 extern "C"
 #endif
-#if defined XWIN32 || defined WINCE
+#if __WIN32__
 __declspec(dllexport)
 #endif
 int32_t __httpsd_fd(void* h, int32_t fd, int8_t* b, int32_t sz, void* moreinfo, void* o)
@@ -1752,7 +1853,7 @@ int32_t __httpsd_fd(void* h, int32_t fd, int8_t* b, int32_t sz, void* moreinfo, 
 #if defined __cplusplus
 extern "C"
 #endif
-#if defined XWIN32 || defined WINCE
+#if __WIN32__
 __declspec(dllexport)
 #endif
 int32_t __httpsd_read(void* h, int32_t fd, int8_t* b, int32_t sz, void* moreinfo, void* o)
@@ -1768,7 +1869,7 @@ int32_t __httpsd_read(void* h, int32_t fd, int8_t* b, int32_t sz, void* moreinfo
 #if defined __cplusplus
 extern "C"
 #endif
-#if defined XWIN32 || defined WINCE
+#if __WIN32__
 __declspec(dllexport)
 #endif
 int32_t __httpsd_open(void** h, int8_t* argv, int32_t (*f[])(void*,int32_t,int8_t*,int32_t,void*,void*), void* o)
@@ -1794,6 +1895,9 @@ int32_t __httpsd_open(void** h, int8_t* argv, int32_t (*f[])(void*,int32_t,int8_
   if ( e > 0 ) sprintf(&_iargv[_iap], "%s\n", _argv);
   else sprintf(&_iargv[_iap], "\n", _argv);
   _iap = strlen(_iargv);
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
   #if DEBUG
   printf("%s\r\n", _argv);
@@ -1805,11 +1909,17 @@ int32_t __httpsd_open(void** h, int8_t* argv, int32_t (*f[])(void*,int32_t,int8_
   if ( e > 0 ) sprintf(&_iargv[_iap], "%s\n", _argv);
   else sprintf(&_iargv[_iap], "\n", _argv);
   _iap = strlen(_iargv);
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
   e = NJSON_STR(argv, "SECRET_KEY_1", _argv);
   if ( e > 0 ) sprintf(&_iargv[_iap], "%s\n", _argv);
   else sprintf(&_iargv[_iap], "\n", _argv);
   _iap = strlen(_iargv);
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
   e = imtif->setMessage(&imtif->hdl, (void*)MAKELONG(INIT,MTIF), _iargv, 0);
 
@@ -1830,16 +1940,25 @@ int32_t __httpsd_open(void** h, int8_t* argv, int32_t (*f[])(void*,int32_t,int8_
     imtif->pb = (int8_t*)calloc(atoi(_argv), sizeof(int8_t));
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_BUFFER_PTR,XHTTPD), (void*)imtif->pb,(void*)atoi(_argv));
   }
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
   if ( NJSON_STR(argv, "IP", _argv)<0 )
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_IP,XHTTPD), (void*)"127.0.0.1",(void*)strlen("XXXXXXXXX"));
   else
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_IP,XHTTPD), (void*)_argv,(void*)strlen(_argv));
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
   if ( NJSON_STR(argv, "PORT", _argv)<0 )
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_PORT, XHTTPD), (void*)"443",(void*)strlen("XXX"));
   else
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_PORT, XHTTPD), (void*)_argv,(void*)strlen(_argv));
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
 
 
@@ -1848,6 +1967,9 @@ int32_t __httpsd_open(void** h, int8_t* argv, int32_t (*f[])(void*,int32_t,int8_
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_CSTYPE, XHTTPD), (void*)"SERVER",(void*)strlen("XXXXXX"));
   else
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_CSTYPE, XHTTPD), (void*)_argv,(void*)strlen(_argv));
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
   if ( NJSON_STR(argv, "MAX_FD", _argv)<0 )
   {
@@ -1859,41 +1981,65 @@ int32_t __httpsd_open(void** h, int8_t* argv, int32_t (*f[])(void*,int32_t,int8_
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_MAX_FD, XHTTPD), (void*)_argv,(void*)strlen(_argv));
     imtif->icd.fdset.max = atoi(_argv);
   }
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
   if ( NJSON_STR(argv, "SYNC", _argv)<0 )
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_SYNC, XHTTPD), (void*)"DISABLE",(void*)strlen("XXXXXXX"));
   else
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_SYNC, XHTTPD), (void*)_argv,(void*)strlen(_argv));
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
   if ( NJSON_STR(argv, "BLOCK", _argv)<0 )
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_BLOCK, XHTTPD), (void*)"DISABLE",(void*)strlen("XXXXXXX"));
   else
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_BLOCK, XHTTPD), (void*)_argv,(void*)strlen(_argv));
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
   if ( NJSON_STR(argv, "TIMEOUT", _argv)<0 )
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_TIMEOUT, XHTTPD), (void*)"0",(void*)strlen("X"));
   else
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_TIMEOUT, XHTTPD), (void*)_argv,(void*)strlen(_argv));
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
   if ( NJSON_STR(argv, "PROTOCOL", _argv)<0 )
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_PROTO, XHTTPD), (void*)"TCP",(void*)strlen("XXX"));
   else
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_PROTO, XHTTPD), (void*)_argv,(void*)strlen(_argv));
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
   if ( NJSON_STR(argv, "CASTTYPE", _argv)<0 )
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_CASTTYPE, XHTTPD), (void*)"UNICAST",(void*)strlen("XXXXXXX"));
   else
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_CASTTYPE, XHTTPD), (void*)_argv,(void*)strlen(_argv));
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
   if ( NJSON_STR(argv, "HOME", _argv)<0 )
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_HOME, XHTTPD), (void*)"/",(void*)strlen("X"));
   else 
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_HOME, XHTTPD), (void*)_argv,(void*)strlen(_argv));
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
   if ( NJSON_STR(argv, "INDEX", _argv)<0 )
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_INDEX, XHTTPD), (void*)"index.html",(void*)strlen("XXXXXXXXXX"));
   else 
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_INDEX, XHTTPD), (void*)_argv,(void*)strlen(_argv));
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
   e = imtif->setMessage( imtif->h, (void*)MAKELONG(SYSTEM_CALLBACK,XHTTPD),__httpsd_callback, imtif);
 
@@ -1916,7 +2062,7 @@ int32_t __httpsd_open(void** h, int8_t* argv, int32_t (*f[])(void*,int32_t,int8_
 #if defined __cplusplus
 extern "C"
 #endif
-#if defined XWIN32 || defined WINCE
+#if __WIN32__
 __declspec(dllexport)
 #endif
 int32_t __httpsd_close(void** h)
@@ -2034,7 +2180,7 @@ void* __ws_callback(void* h, void* msg, void* wparam, void* lparam)
 #if defined __cplusplus
 extern "C"
 #endif
-#if defined XWIN32 || defined WINCE
+#if __WIN32__
 __declspec(dllexport)
 #endif
 int32_t __ws_fdset(void* h, int32_t fd, int8_t* b, int32_t sz, void* moreinfo, void* o)
@@ -2046,7 +2192,7 @@ int32_t __ws_fdset(void* h, int32_t fd, int8_t* b, int32_t sz, void* moreinfo, v
 #if defined __cplusplus
 extern "C"
 #endif
-#if defined XWIN32 || defined WINCE
+#if __WIN32__
 __declspec(dllexport)
 #endif
 int32_t __ws_fd(void* h, int32_t fd, int8_t* b, int32_t sz, void* moreinfo, void* o)
@@ -2061,7 +2207,7 @@ int32_t __ws_fd(void* h, int32_t fd, int8_t* b, int32_t sz, void* moreinfo, void
 #if defined __cplusplus
 extern "C"
 #endif
-#if defined XWIN32 || defined WINCE
+#if __WIN32__
 __declspec(dllexport)
 #endif
 int32_t __ws_read(void* h, int32_t fd, int8_t* b, int32_t sz, void* moreinfo, void* o)
@@ -2079,7 +2225,7 @@ int32_t __ws_read(void* h, int32_t fd, int8_t* b, int32_t sz, void* moreinfo, vo
 #if defined __cplusplus
 extern "C"
 #endif
-#if defined XWIN32 || defined WINCE
+#if __WIN32__
 __declspec(dllexport)
 #endif
 int32_t __ws_write(void* h, int32_t fd, int8_t* b, int32_t sz, void* moreinfo, void* o)
@@ -2096,7 +2242,7 @@ int32_t __ws_write(void* h, int32_t fd, int8_t* b, int32_t sz, void* moreinfo, v
 #if defined __cplusplus
 extern "C"
 #endif
-#if defined XWIN32 || defined WINCE
+#if __WIN32__
 __declspec(dllexport)
 #endif
 int32_t __ws_open(void** h, int8_t* argv, int32_t (*f[])(void*,int32_t,int8_t*,int32_t,void*,void*), void* o)
@@ -2120,6 +2266,9 @@ int32_t __ws_open(void** h, int8_t* argv, int32_t (*f[])(void*,int32_t,int8_t*,i
   if ( e > 0 ) sprintf(&_iargv[_iap], "%s\n", _argv);
   else sprintf(&_iargv[_iap], "\n", _argv);
   _iap = strlen(_iargv);
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
   if ( modulus(imtif, _argv) < 0 ) return 0xEF000001;
 
@@ -2127,11 +2276,17 @@ int32_t __ws_open(void** h, int8_t* argv, int32_t (*f[])(void*,int32_t,int8_t*,i
   if ( e > 0 ) sprintf(&_iargv[_iap], "%s\n", _argv);
   else sprintf(&_iargv[_iap], "\n", _argv);
   _iap = strlen(_iargv);
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
   e = NJSON_STR(argv, "SECRET_KEY_1", _argv);
   if ( e > 0 ) sprintf(&_iargv[_iap], "%s\n", _argv);
   else sprintf(&_iargv[_iap], "\n", _argv);
   _iap = strlen(_iargv);
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
   e = imtif->setMessage(&imtif->hdl, (void*)MAKELONG(INIT,MTIF), _iargv, 0);
 
@@ -2150,22 +2305,34 @@ int32_t __ws_open(void** h, int8_t* argv, int32_t (*f[])(void*,int32_t,int8_t*,i
     imtif->pb = (int8_t*)calloc(atoi(_argv), sizeof(int8_t));
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_BUFFER_PTR,XWEBSOCKET), (void*)imtif->pb,(void*)atoi(_argv));
   }
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
 
   if ( NJSON_STR(argv, "IP", _argv)<0 )
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_IP,XWEBSOCKET), (void*)"127.0.0.1",(void*)strlen("XXXXXXXXX"));
   else
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_IP,XWEBSOCKET), (void*)_argv,(void*)strlen(_argv));
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
   if ( NJSON_STR(argv, "PORT", _argv)<0 )
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_PORT, XWEBSOCKET), (void*)"80",(void*)strlen("XX"));
   else
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_PORT, XWEBSOCKET), (void*)_argv,(void*)strlen(_argv));
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
   if ( NJSON_STR(argv, "CSTYPE", _argv)<0 )
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_CSTYPE, XWEBSOCKET), (void*)"SERVER",(void*)strlen("XXXXXX"));
   else
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_CSTYPE, XWEBSOCKET), (void*)_argv,(void*)strlen(_argv));
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
   if ( NJSON_STR(argv, "MAX_FD", _argv)<0 )
   {
@@ -2177,46 +2344,73 @@ int32_t __ws_open(void** h, int8_t* argv, int32_t (*f[])(void*,int32_t,int8_t*,i
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_MAX_FD, XWEBSOCKET), (void*)_argv,(void*)strlen(_argv));
     imtif->icd.fdset.max = atoi(_argv);
   }
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
   if ( NJSON_STR(argv, "SYNC", _argv)<0 )
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_SYNC, XWEBSOCKET), (void*)"DISABLE",(void*)strlen("XXXXXXX"));
   else
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_SYNC, XWEBSOCKET), (void*)_argv,(void*)strlen(_argv));
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
   if ( NJSON_STR(argv, "BLOCK", _argv)<0 )
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_BLOCK, XWEBSOCKET), (void*)"DISABLE",(void*)strlen("XXXXXXX"));
   else
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_BLOCK, XWEBSOCKET), (void*)_argv,(void*)strlen(_argv));
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
   if ( NJSON_STR(argv, "TIMEOUT", _argv)<0 )
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_TIMEOUT, XWEBSOCKET), (void*)"0",(void*)strlen("X"));
   else
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_TIMEOUT, XWEBSOCKET), (void*)_argv,(void*)strlen(_argv));
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
   if ( NJSON_STR(argv, "PROTOCOL", _argv)<0 )
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_PROTO, XWEBSOCKET), (void*)"TCP",(void*)strlen("XXX"));
   else
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_PROTO, XWEBSOCKET), (void*)_argv,(void*)strlen(_argv));
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
   if ( NJSON_STR(argv, "CASTTYPE", _argv)<0 )
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_CASTTYPE, XWEBSOCKET), (void*)"UNICAST",(void*)strlen("XXXXXXX"));
   else
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_CASTTYPE, XWEBSOCKET), (void*)_argv,(void*)strlen(_argv));
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
   if ( NJSON_STR(argv, "URL", _argv)<0 )
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_URL         , XWEBSOCKET), (void*)"http://127.0.0.1",(void*)strlen("XXXXXXXXXXXXXXXX"));
   else 
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_URL         , XWEBSOCKET), (void*)_argv,(void*)strlen(_argv));
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
   if ( NJSON_STR(argv, "URI", _argv)<0 )
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_URI         ,   XWEBSOCKET), (void*)"/",(void*)strlen("/"));
   else
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_URI         ,   XWEBSOCKET), (void*)_argv,(void*)strlen(_argv));
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
   if ( NJSON_STR(argv, "CONTENTS", _argv)<0 )
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_CONTENTS    , XWEBSOCKET), (void*)"",(void*)strlen(""));
   else 
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_CONTENTS    , XWEBSOCKET), (void*)_argv,(void*)strlen(_argv));
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(SYSTEM_CALLBACK,   XWEBSOCKET),__ws_callback, imtif);
 
@@ -2228,7 +2422,7 @@ int32_t __ws_open(void** h, int8_t* argv, int32_t (*f[])(void*,int32_t,int8_t*,i
 #if defined __cplusplus
 extern "C"
 #endif
-#if defined XWIN32 || defined WINCE
+#if __WIN32__
 __declspec(dllexport)
 #endif
 int32_t __ws_close(void** h)
@@ -2342,7 +2536,7 @@ void* __serial_callback(void* h, void* msg, void* wparam, void* lparam)
 #if defined __cplusplus
 extern "C"
 #endif
-#if defined XWIN32 || defined WINCE
+#if __WIN32__
 __declspec(dllexport)
 #endif
 int32_t __serial_fd(void* h, int32_t fd, int8_t* b, int32_t sz, void* moreinfo, void* o)
@@ -2356,7 +2550,7 @@ int32_t __serial_fd(void* h, int32_t fd, int8_t* b, int32_t sz, void* moreinfo, 
 #if defined __cplusplus
 extern "C"
 #endif
-#if defined XWIN32 || defined WINCE
+#if __WIN32__
 __declspec(dllexport)
 #endif
 int32_t __serial_read(void* h, int32_t fd, int8_t* b, int32_t sz, void* moreinfo, void* o)
@@ -2373,7 +2567,7 @@ int32_t __serial_read(void* h, int32_t fd, int8_t* b, int32_t sz, void* moreinfo
 #if defined __cplusplus
 extern "C"
 #endif
-#if defined XWIN32 || defined WINCE
+#if __WIN32__
 __declspec(dllexport)
 #endif
 int32_t __serial_write(void* h, int32_t fd, int8_t* b, int32_t sz, void* moreinfo, void* o)
@@ -2389,7 +2583,7 @@ int32_t __serial_write(void* h, int32_t fd, int8_t* b, int32_t sz, void* moreinf
 #if defined __cplusplus
 extern "C"
 #endif
-#if defined XWIN32 || defined WINCE
+#if __WIN32__
 __declspec(dllexport)
 #endif
 int32_t __serial_open(void** h, int8_t* argv, int32_t (*f[])(void*,int32_t,int8_t*,int32_t,void*,void*), void* o)
@@ -2413,6 +2607,9 @@ int32_t __serial_open(void** h, int8_t* argv, int32_t (*f[])(void*,int32_t,int8_
   if ( e > 0 ) sprintf(&_iargv[_iap], "%s\n", _argv);
   else sprintf(&_iargv[_iap], "\n", _argv);
   _iap = strlen(_iargv);
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
   if ( modulus(imtif, _argv) < 0 ) return 0xEF000001;
 
@@ -2420,11 +2617,17 @@ int32_t __serial_open(void** h, int8_t* argv, int32_t (*f[])(void*,int32_t,int8_
   if ( e > 0 ) sprintf(&_iargv[_iap], "%s\n", _argv);
   else sprintf(&_iargv[_iap], "\n", _argv);
   _iap = strlen(_iargv);
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
   e = NJSON_STR(argv, "SECRET_KEY_1", _argv);
   if ( e > 0 ) sprintf(&_iargv[_iap], "%s\n", _argv);
   else sprintf(&_iargv[_iap], "\n", _argv);
   _iap = strlen(_iargv);
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
   e = imtif->setMessage(&imtif->hdl, (void*)MAKELONG(INIT,MTIF), _iargv, 0);
 
@@ -2443,36 +2646,57 @@ int32_t __serial_open(void** h, int8_t* argv, int32_t (*f[])(void*,int32_t,int8_
     imtif->pb = (int8_t*)calloc(atoi(_argv), sizeof(int8_t));
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_BUFFER_PTR,XSERIAL), (void*)imtif->pb,(void*)atoi(_argv));
   }
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
   if ( NJSON_STR(argv, "PORT", _argv)<0 )
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_PORT,XSERIAL), (void*)__SYSTEM_SERIAL_PORT__,(void*)strlen(__SYSTEM_SERIAL_PORT__));
   else
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_PORT,XSERIAL), (void*)_argv,(void*)strlen(_argv));
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
   if ( NJSON_STR(argv, "BAUDRATE", _argv)<0 )
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_BAUDRATE,XSERIAL), (void*)"115200",(void*)strlen("XXXXXX"));
   else
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_BAUDRATE,XSERIAL), (void*)_argv,(void*)strlen(_argv));
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
   if ( NJSON_STR(argv, "DATABIT", _argv)<0 )
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_DATABIT,XSERIAL), (void*)"8",(void*)strlen("X"));
   else
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_DATABIT,XSERIAL), (void*)_argv,(void*)strlen(_argv));
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
   if ( NJSON_STR(argv, "STOPBIT", _argv)<0 )
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_STOPBIT,XSERIAL), (void*)"1",(void*)strlen("X"));
   else
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_STOPBIT,XSERIAL), (void*)_argv,(void*)strlen(_argv));
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
   if ( NJSON_STR(argv, "PARITYBIT", _argv)<0 )
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_PARITYBIT,XSERIAL), (void*)"0",(void*)strlen("X"));
   else
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_PARITYBIT,XSERIAL), (void*)_argv,(void*)strlen(_argv));
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
   if ( NJSON_STR(argv, "SYNC", _argv)<0 )
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_SYNC, XSERIAL), (void*)"DISABLE",(void*)strlen("XXXXXXX"));
   else
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_SYNC, XSERIAL), (void*)_argv,(void*)strlen(_argv));
+  #if __DEBUG__
+  printf(" %-16s:%6d | NJSON_STR -> %s\r\n", __FUNCTION__,__LINE__, _argv);
+  #endif
 
   e = imtif->setMessage( imtif->h, (void*)MAKELONG(SYSTEM_CALLBACK,XSERIAL),__serial_callback, imtif);
   imtif->fd = e = imtif->setMessage( imtif->h, (void*)MAKELONG(ENABLE,XSERIAL), 0,0);
@@ -2483,7 +2707,7 @@ int32_t __serial_open(void** h, int8_t* argv, int32_t (*f[])(void*,int32_t,int8_
 #if defined __cplusplus
 extern "C"
 #endif
-#if defined XWIN32 || defined WINCE
+#if __WIN32__
 __declspec(dllexport)
 #endif
 int32_t __serial_close(void** h)
@@ -2550,7 +2774,7 @@ void* __hmac_callback(void* h, void* msg, void* wparam, void* lparam)
 #if defined __cplusplus
 extern "C"
 #endif
-#if defined XWIN32 || defined WINCE
+#if __WIN32__
 __declspec(dllexport)
 #endif
 int32_t __hmac(void** h, int8_t* argv, int32_t (*f[])(void*,int32_t,int8_t*,int32_t,void*,void*), void* o)
@@ -2608,11 +2832,11 @@ int32_t __hmac(void** h, int8_t* argv, int32_t (*f[])(void*,int32_t,int8_t*,int3
     #if __STATIC_LIB__==0
     if ( imtif->hmodule )
     {
-      #if defined LINUX
+      #if __LINUX__
       dlclose(imtif->hmodule);
       #endif
 
-      #if defined XWIN32
+      #if __WIN32__
       FreeLibrary(imtif->hmodule);
       #endif
     }
@@ -2630,11 +2854,11 @@ int32_t __hmac(void** h, int8_t* argv, int32_t (*f[])(void*,int32_t,int8_t*,int3
     #if __STATIC_LIB__==0
     if ( imtif->hmodule )
     {
-      #if defined LINUX
+      #if __LINUX__
       dlclose(imtif->hmodule);
       #endif
 
-      #if defined XWIN32
+      #if __WIN32__
       FreeLibrary(imtif->hmodule);
       #endif
     }
@@ -2653,11 +2877,11 @@ int32_t __hmac(void** h, int8_t* argv, int32_t (*f[])(void*,int32_t,int8_t*,int3
   #if __STATIC_LIB__==0
   if ( imtif->hmodule )
   {
-    #if defined LINUX
+    #if __LINUX__
     dlclose(imtif->hmodule);
     #endif
 
-    #if defined XWIN32
+    #if __WIN32__
     FreeLibrary(imtif->hmodule);
     #endif
   }

@@ -69,41 +69,41 @@ enum
 
 
 
-#if defined XWIN32
+#if __WIN32__
 #pragma pack(1)
 #endif
 typedef struct
-#if defined LINUX
+#if __LINUX__
 __attribute__((packed))
 #endif
 {
   int32_t   a[4];  // fd sz  bp  fdp
 } __imtifFDSET;
-#if defined XWIN32
+#if __WIN32__
 #pragma pack()
 #endif
 
 
-#if defined XWIN32
+#if __WIN32__
 #pragma pack(1)
 #endif
 typedef struct
-#if defined LINUX
+#if __LINUX__
 __attribute__((packed))
 #endif
 {
   int32_t max;
   __imtifFDSET* fds;
 } imtifFDSET;
-#if defined XWIN32
+#if __WIN32__
 #pragma pack()
 #endif
 
-#if defined XWIN32
+#if __WIN32__
 #pragma pack(1)
 #endif
 typedef struct
-#if defined LINUX
+#if __LINUX__
 __attribute__((packed))
 #endif
 {
@@ -114,7 +114,7 @@ __attribute__((packed))
 
   imtifFDSET fdset;
 } imtif;
-#if defined XWIN32
+#if __WIN32__
 #pragma pack()
 #endif
 

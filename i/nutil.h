@@ -28,15 +28,15 @@
 #include <stdlib.h>
 #include <stdint.h>
 
-#if defined XWIN32
+#if __WIN32__
 #include <Windows.h>
 #endif
 
-#if defined XWIN32
+#if __WIN32__
 #define delay(a)     Sleep(a)
 #endif
 
-#if defined LINUX
+#if __LINUX__
 #define delay(a)     usleep(a*1000)
 #endif
 
