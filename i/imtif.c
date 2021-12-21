@@ -1613,7 +1613,7 @@ void* __httpsd_accept(void* h, void* msg, void* wparam, void* lparam)
   return e;
 }
 #endif
-#if 1// defined LINUX
+#if 1
 #if defined __cplusplus
 extern "C"
 #endif
