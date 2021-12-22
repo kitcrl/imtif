@@ -37,7 +37,7 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{7DBF7C4D-DF2E-4B02-AE41-A17EA8EF6599}</ProjectGuid>
+    <ProjectGuid>{8259B346-5035-4A6E-ACD3-A1E7DE848CEE}</ProjectGuid>
     <RootNamespace>imtif</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
   </PropertyGroup>

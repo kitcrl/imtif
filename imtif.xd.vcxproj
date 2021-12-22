@@ -37,7 +37,7 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{BAC46AA3-ED94-48BD-968C-58627617B0E8}</ProjectGuid>
+    <ProjectGuid>{9AF9CB7E-B486-4441-A096-FD6BC5348C1D}</ProjectGuid>
     <RootNamespace>icode.xd</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
