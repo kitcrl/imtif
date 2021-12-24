@@ -234,6 +234,10 @@ void* __cmain(int argc, char** argv)
 			Sleep(1);
 		}
 		#endif
+		#if __LINUX__
+		sa.f[0](sa.o);
+
+		#endif
 	}
 	else
 	{
