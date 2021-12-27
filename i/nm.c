@@ -298,11 +298,13 @@ int32_t __box_imtif_x(int32_t argc, int8_t** argv, ServiceArgs* p)
 
   memset(_argv, 0, 512);
   readArgs(argc, argv, "--s", _argv); 
+  #if __DEBUG__
 	BOX(_argv);
   printf("+------------------------+-----------------------------------------------------+\r\n");
 	printf("| %22s | %51s |\r\n", "version", _ver);
 	printf("| %22s | %51s |\r\n", "author", _authr);
   printf("+------------------------+-----------------------------------------------------+\r\n");
+  #endif
 
   #if __STATIC_LIB__==0
   #if __LINUX__
