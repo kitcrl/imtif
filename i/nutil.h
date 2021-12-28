@@ -47,7 +47,7 @@
                             "|                                                                              |\r\n"\
                             "+------------------------------------------------------------------------------+\r\n", a)
 
-int32_t asc_to_hex(uint8_t* src, uint8_t* dst);
+int32_t atoh(uint8_t* src, uint8_t* dst);
 int32_t hex_to_asc(uint8_t* src, uint8_t* dst);
 int32_t to_raw(int8_t* in, int32_t isz, int8_t* out, int32_t* osz);
 int32_t get_keyvalue(int8_t* in, int8_t* key, int8_t* val, int32_t* vsz);

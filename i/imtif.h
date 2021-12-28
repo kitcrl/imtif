@@ -118,6 +118,11 @@ __attribute__((packed))
 #pragma pack()
 #endif
 
+#if __STATIC_LIB__==1
+extern int32_t mtifGetMessage(void* h, void* m, void* w, void* l);
+extern int32_t mtifSetMessage(void* h, void* m, void* w, void* l);
+extern int32_t mtifPutMessage(void* h, void* m, void* w, void* l);
+#endif
 
 
 ///////////////////////////////////////////////////////////////////////////////

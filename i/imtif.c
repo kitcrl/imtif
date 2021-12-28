@@ -24,12 +24,12 @@
 #include <dlfcn.h>
 #endif
 
-
-#if __STATIC_LIB__==1
-extern int32_t mtifGetMessage(void* h, void* m, void* w, void* l);
-extern int32_t mtifSetMessage(void* h, void* m, void* w, void* l);
-extern int32_t mtifPutMessage(void* h, void* m, void* w, void* l);
-#endif
+//
+//#if __STATIC_LIB__==1
+//extern int32_t mtifGetMessage(void* h, void* m, void* w, void* l);
+//extern int32_t mtifSetMessage(void* h, void* m, void* w, void* l);
+//extern int32_t mtifPutMessage(void* h, void* m, void* w, void* l);
+//#endif
 
 #if __LINUX__
 #define __SYSTEM_SERIAL_PORT__             ""
@@ -2844,7 +2844,7 @@ int32_t __hmac(void** h, int8_t* argv, int32_t (*f[])(void*,int32_t,int8_t*,int3
     #endif
     return 0xEFFFFFFF;
   }
-  sz[0] = asc_to_hex(_argv, _hbuf[0]);
+  sz[0] = atoh(_argv, _hbuf[0]);
 	e = imtif->setMessage( imtif->h, MAKELONG(SIFR_PARAM_KEY, SIFR_HMAC_SHA256), _hbuf[0], sz[0]);
 
 
@@ -2867,7 +2867,7 @@ int32_t __hmac(void** h, int8_t* argv, int32_t (*f[])(void*,int32_t,int8_t*,int3
 
     return 0xEFFFFFFF;
   }
-  sz[1] = asc_to_hex(_argv, _hbuf[1]);
+  sz[1] = atoh(_argv, _hbuf[1]);
   e = imtif->setMessage( imtif->h, MAKELONG(HASH, SIFR_HMAC_SHA256), _hbuf[1], sz[1]);
 
 	e = imtif->setMessage( imtif->h, MAKELONG(SIFR_PARAM_CLEAR, SIFR_HMAC_SHA256), MAKELONG(SIFR_PARAM_KEY, 0), 0);

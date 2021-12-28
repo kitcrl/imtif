@@ -1,6 +1,6 @@
 #include <nutil.h>
 
-int32_t asc_to_hex(uint8_t* src, uint8_t* dst)
+int32_t atoh(uint8_t* src, uint8_t* dst)
 {
   int32_t i=0;
   for (i=0; *src ; src++, i++ )

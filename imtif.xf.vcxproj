@@ -110,7 +110,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>.;i;..\mtif\$(PlatformTarget);..\mtif\openssl\v1.1.1k\$(PlatformTarget)\include\;..\mtif\openssl\v1.1.1k\$(PlatformTarget)\include\openssl;</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>x32;__WIN32__=1;__CUSTOM_X_SOCKET__=1;__CUSTOM_X_HTTP__=1;__CUSTOM_X_HTTPD__=0;__CUSTOM_X_HTTPSD__=0;__CUSTOM_X_WS__=1;__CUSTOM_X_SERIAL__=1;__CUSTOM_X_SIFR__=0;__STATIC_LIB__=0;__SSL_TLS__=0;__CODE_LIMITER__=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>x32;__WIN32__=1;__CUSTOM_X_SOCKET__=1;__CUSTOM_X_HTTP__=1;__CUSTOM_X_HTTPD__=0;__CUSTOM_X_HTTPSD__=0;__CUSTOM_X_WS__=1;__CUSTOM_X_SERIAL__=1;__CUSTOM_X_SIFR__=0;__STATIC_LIB__=0;__SSL_TLS__=0;__MTIF_LIMITER__=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -135,7 +135,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>.;i;..\mtif\$(LlvmPlatformName);..\mtif\openssl\v1.1.1k\$(LlvmPlatformName)\include\;..\mtif\openssl\v1.1.1k\$(LlvmPlatformName)\include\openssl;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>x64;__WIN32__=1;__CUSTOM_X_SOCKET__=1;__CUSTOM_X_HTTP__=1;__CUSTOM_X_HTTPD__=0;__CUSTOM_X_HTTPSD__=0;__CUSTOM_X_WS__=1;__CUSTOM_X_SERIAL__=1;__CUSTOM_X_SIFR__=0;__STATIC_LIB__=0;__SSL_TLS__=0;__CODE_LIMITER__=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>x64;__WIN32__=1;__CUSTOM_X_SOCKET__=1;__CUSTOM_X_HTTP__=1;__CUSTOM_X_HTTPD__=0;__CUSTOM_X_HTTPSD__=0;__CUSTOM_X_WS__=1;__CUSTOM_X_SERIAL__=1;__CUSTOM_X_SIFR__=0;__STATIC_LIB__=0;__SSL_TLS__=0;__MTIF_LIMITER__=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <PrecompiledHeader>
@@ -161,7 +161,7 @@
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <AdditionalIncludeDirectories>.;i;..\mtif\$(PlatformTarget);..\mtif\openssl\v1.1.1k\$(PlatformTarget)\include\;..\mtif\openssl\v1.1.1k\$(PlatformTarget)\include\openssl;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>x32;__WIN32__=1;__CUSTOM_X_SOCKET__=1;__CUSTOM_X_HTTP__=1;__CUSTOM_X_HTTPD__=0;__CUSTOM_X_HTTPSD__=0;__CUSTOM_X_WS__=1;__CUSTOM_X_SERIAL__=1;__CUSTOM_X_SIFR__=0;__STATIC_LIB__=0;__SSL_TLS__=0;__CODE_LIMITER__=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>x32;__WIN32__=1;__CUSTOM_X_SOCKET__=1;__CUSTOM_X_HTTP__=1;__CUSTOM_X_HTTPD__=0;__CUSTOM_X_HTTPSD__=0;__CUSTOM_X_WS__=1;__CUSTOM_X_SERIAL__=1;__CUSTOM_X_SIFR__=0;__STATIC_LIB__=0;__SSL_TLS__=0;__MTIF_LIMITER__=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <PrecompiledHeader />
@@ -187,7 +187,7 @@
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <AdditionalIncludeDirectories>.;i;..\mtif\$(LlvmPlatformName);..\mtif\openssl\v1.1.1k\$(LlvmPlatformName)\include\;..\mtif\openssl\v1.1.1k\$(LlvmPlatformName)\include\openssl;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>x64;__WIN32__=1;__CUSTOM_X_SOCKET__=1;__CUSTOM_X_HTTP__=1;__CUSTOM_X_HTTPD__=0;__CUSTOM_X_HTTPSD__=0;__CUSTOM_X_WS__=1;__CUSTOM_X_SERIAL__=1;__CUSTOM_X_SIFR__=0;__STATIC_LIB__=0;__SSL_TLS__=0;__CODE_LIMITER__=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>x64;__WIN32__=1;__CUSTOM_X_SOCKET__=1;__CUSTOM_X_HTTP__=1;__CUSTOM_X_HTTPD__=0;__CUSTOM_X_HTTPSD__=0;__CUSTOM_X_WS__=1;__CUSTOM_X_SERIAL__=1;__CUSTOM_X_SIFR__=0;__STATIC_LIB__=0;__SSL_TLS__=0;__MTIF_LIMITER__=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <PrecompiledHeader>

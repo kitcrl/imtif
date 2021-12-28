@@ -13,7 +13,7 @@
 #include <nm.h>
 #include <nutil.h>
 #include <zio.x.h>
-
+#include <imtif.h>
 typedef struct
 {
 	void* (*f[2])(void*);
@@ -291,15 +291,17 @@ int32_t __box_imtif_x(int32_t argc, int8_t** argv, ServiceArgs* p)
   #endif
   #endif
 
+  #if __DEBUG__
+	BOX(_argv);
+  memset(_argv, 0, 512);
+  readArgs(argc, argv, "--s", _argv); 
+
+  #if __STATIC_LIB__==1
+  getMessage = mtifGetMessage;
+  #endif
 
 	e = getMessage(0, (void*)MAKELONG(SYSTEM_VERSION, MTIF), _ver, 512);
 	e = getMessage(0, (void*)MAKELONG(SYSTEM_AUTHOR, MTIF), _authr, 512);
-
-
-  memset(_argv, 0, 512);
-  readArgs(argc, argv, "--s", _argv); 
-  #if __DEBUG__
-	BOX(_argv);
   printf("+------------------------+-----------------------------------------------------+\r\n");
 	printf("| %22s | %51s |\r\n", "version", _ver);
 	printf("| %22s | %51s |\r\n", "author", _authr);

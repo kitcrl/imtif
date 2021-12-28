@@ -151,25 +151,6 @@ endif
 #                                                                              #
 ################################################################################
 
-COPT += -D__DRBG_CHECK__=0
-COPT += -D__WEBSOCKET__=1
-COPT += -D__HTTP__=1
-COPT += -D__MIME__=1
-COPT += -D__SHM__=1
-COPT += -D__NIC__=0
-COPT += -D__CGI__=0
-COPT += -D__XML__=0
-COPT += -D__SERIAL__=1
-COPT += -D__SOCKET__=1
-COPT += -D__PACKET__=1
-COPT += -D__DBC__=0
-COPT += -D__SHA1__=1
-COPT += -D__LIST__=0
-COPT += -D__QUEUE__=0
-COPT += -D__STACK__=0
-COPT += -D__JSON__=1
-COPT += -D__SYSQUEUE__=0
-
 LIBS = -lnsl -lrt
 RM = rm -rf
 CP = cp -rf
