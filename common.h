@@ -53,6 +53,8 @@
 #include <dlfcn.h>
 #include <netdb.h>
 #include <linux/if_packet.h>
+#include <fcntl.h>
+#include <pthread.h>
 #ifndef __USE_GNU
 #define __USE_GNU
 #endif
@@ -65,19 +67,12 @@
 #include <iphlpapi.h>
 #include <sys/timeb.h>
 #include <process.h>
-#endif
-
-#if __LINUX__
-#include <fcntl.h>
-#include <pthread.h>
+#include <ws2tcpip.h>
 #endif
 
 #include <time.h>
 #include <math.h>
 
-#if __WIN32__
-#include <ws2tcpip.h>
-#endif
 
 #define BOX(a)        printf("+------------------------------------------------------------------------------+\r\n" \
                             "|                                                                              |\r\n"\
@@ -209,33 +204,30 @@ while ( i>=0 ) {               \
 #if __WIN32__
 #define xLOCK_INIT(crit)       InitializeCriticalSection((CRITICAL_SECTION*)(crit))
 #endif
-
 #if __LINUX__
-#define xLOCK_INIT(crit)       pthread_mutex_init((pthread_mutex_t*)(crit), 0);
+#define xLOCK_INIT(crit)       pthread_mutex_init((pthread_mutex_t*)(crit), 0)
 #endif
 
 #if __WIN32__
-#define xLOCK_FINAL(crit)      DeleteCriticalSection((CRITICAL_SECTION*)(crit));
+#define xLOCK_FINAL(crit)      DeleteCriticalSection((CRITICAL_SECTION*)(crit))
 #endif
 #if __LINUX__
-#define xLOCK_FINAL(crit)      pthread_mutex_destroy((pthread_mutex_t*)(crit));
+#define xLOCK_FINAL(crit)      pthread_mutex_destroy((pthread_mutex_t*)(crit))
 #endif
 
 #if __WIN32__
-#define xLOCK(crit)            EnterCriticalSection((CRITICAL_SECTION*)(crit));
+#define xLOCK(crit)            EnterCriticalSection((CRITICAL_SECTION*)(crit))
 #endif
 #if __LINUX__
-#define xLOCK(crit)            pthread_mutex_lock((pthread_mutex_t*)(crit));
+#define xLOCK(crit)            pthread_mutex_lock((pthread_mutex_t*)(crit))
 #endif
-
 
 #if __WIN32__
-#define xUNLOCK(crit)          LeaveCriticalSection((CRITICAL_SECTION*)(crit));
+#define xUNLOCK(crit)          LeaveCriticalSection((CRITICAL_SECTION*)(crit))
 #endif
 #if __LINUX__
-#define xUNLOCK(crit)          pthread_mutex_unlock((pthread_mutex_t*)(crit));
+#define xUNLOCK(crit)          pthread_mutex_unlock((pthread_mutex_t*)(crit))
 #endif
-
 
 
 #if __WIN32__

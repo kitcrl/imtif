@@ -72,17 +72,14 @@ INC += -I$(PROJ_PATH)/i
 
 ifeq ($(CUSTOM), yes)
 ifeq ($(ONE_SHOT), yes)
-  _TARGET_NAME = $(OUTPUT_NAME).xf
+  _TARGET_NAME = $(OUTPUT_NAME)
 endif
 ifeq ($(ONE_SHOT), no)
-  _TARGET_NAME = $(OUTPUT_NAME)
+  _TARGET_NAME = $(OUTPUT_NAME).xf
 endif
-endif
-ifeq ($(CUSTOM), no)
-  _TARGET_NAME = $(OUTPUT_NAME)
 endif
 
-ifeq ($(ONE_SHOT), yes)
+ifeq ($(CUSTOM), no)
   _TARGET_NAME = $(OUTPUT_NAME)
 endif
 
