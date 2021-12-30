@@ -297,7 +297,7 @@ xSLEEP(1);                                 \
 #if __WIN32__
 #pragma pack(1)
 #endif
-#if __LINUX__
+#if __PACKED__
 __attribute__((packed))
 #endif
 typedef struct xREG

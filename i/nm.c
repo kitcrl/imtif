@@ -8,6 +8,7 @@
 
 #if __LINUX__
 #include <dlfcn.h>
+#include <signal.h>
 #endif
 
 #include <nm.h>
@@ -212,6 +213,10 @@ void* __cmain(int argc, char** argv)
 
 	if ( (_argv[0]=='s') || (_argv[0]=='S') )
 	{
+    #if __DEBUG__
+    printf("Service Mode\r\n");
+    #endif
+
 		#if __WIN32__
     memset(_argv, 0, 512);
     readArgs(argc, argv, "--s", _argv); 
@@ -236,14 +241,15 @@ void* __cmain(int argc, char** argv)
 		#endif
 		#if __LINUX__
 		sa.f[0](sa.o);
-
 		#endif
 	}
 	else
 	{
+    #if __DEBUG__
+    printf("Console Mode\r\n");
+    #endif
 		sa.f[0](sa.o);
 
-		//StartProcess(&cx);
 		while ( 1 )
 		{
 			sa.f[1](sa.o);
@@ -321,7 +327,14 @@ int32_t __box_imtif_x(int32_t argc, int8_t** argv, ServiceArgs* p)
 	return 0;
 }
 
-
+#if __LINUX__
+void signal_handler(int sig)
+{
+  signal(sig, SIG_IGN);
+	BOX("terminated");
+  exit(0);
+}
+#endif
 
 void __nmain(int32_t argc, int8_t** argv, void* (*f0)(void*), void* (*f1)(void*), void* o)
 {
@@ -333,6 +346,11 @@ void __nmain(int32_t argc, int8_t** argv, void* (*f0)(void*), void* (*f1)(void*)
 	sa.f[0] = f0;
 	sa.f[1] = f1;
 	sa.o = o;
+
+  #if __LINUX__
+  printf("SIGINT\r\n");
+  signal(SIGINT, signal_handler);
+  #endif
 
 	__box_imtif_x(argc, argv,&sa);
 	

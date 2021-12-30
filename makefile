@@ -45,6 +45,7 @@ ifeq ($(ARCH_TYPE), x32)
 	COPT += -m32
 	COPT += -DPACKED
 	COPT += -D__LINUX__=1
+	COPT += -D__PACKED__=1
 	COPT += -D__uCHIP__=0
 endif
 
@@ -55,6 +56,7 @@ ifeq ($(ARCH_TYPE), x64)
 	COPT += -Dx64
 	COPT += -m64
 	COPT += -D__LINUX__=1
+	COPT += -D__PACKED__=1
 	COPT += -D__uCHIP__=0
 endif
 
@@ -65,6 +67,7 @@ ifeq ($(ARCH_TYPE), a32) #####
 		XCOMPILE- = arm-linux-gnueabihf-
 		XTARGET = hf.a32
 		COPT += -D__LINUX__=1
+		COPT += -D__PACKED__=1
 		COPT += -D__uCHIP__=0
 		COPT += -DABI_HARD
 		COPT += -mfloat-abi=hard
@@ -74,6 +77,7 @@ ifeq ($(ARCH_TYPE), a32) #####
 		XCOMPILE- = arm-linux-gnueabi-
 		XTARGET = a32
 		COPT += -D__LINUX__=1
+		COPT += -D__PACKED__=1
 		COPT += -D__uCHIP__=0
 		COPT += -DABI_SOFT
 		COPT += -mfloat-abi=soft
@@ -87,6 +91,7 @@ ifeq ($(ARCH_TYPE), a64)
 	ifeq ($(ABI), HARD)
 		XTARGET   = hf.a64
 		COPT += -D__LINUX__=1
+		COPT += -D__PACKED__=1
 		COPT += -D__uCHIP__=0
 		COPT += -DABI_SOFT
 		COPT += -march=armv8-a
@@ -94,6 +99,7 @@ ifeq ($(ARCH_TYPE), a64)
 	ifeq ($(ABI), SOFT)
 		XTARGET   = a64
 		COPT += -D__LINUX__=1
+		COPT += -D__PACKED__=1
 		COPT += -D__uCHIP__=0
 		COPT += -DABI_HARD
 		COPT += -march=armv8-a
@@ -104,6 +110,7 @@ ifeq ($(ARCH_TYPE), m32) #####
 	TOOLCHAIN_PATH = /usr/local/ext/toolchain/x64/v7/arm-eabi/
 	XCOMPILE- = arm-eabi-
 	XTARGET = m32
+	COPT += -D__PACKED__=1
 	COPT += -D__uCHIP__=1
 endif #####
 

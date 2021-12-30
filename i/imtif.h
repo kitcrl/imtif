@@ -73,7 +73,7 @@ enum
 #pragma pack(1)
 #endif
 typedef struct
-#if __LINUX__
+#if __PACKED__
 __attribute__((packed))
 #endif
 {
@@ -88,7 +88,7 @@ __attribute__((packed))
 #pragma pack(1)
 #endif
 typedef struct
-#if __LINUX__
+#if __PACKED__
 __attribute__((packed))
 #endif
 {
@@ -103,7 +103,7 @@ __attribute__((packed))
 #pragma pack(1)
 #endif
 typedef struct
-#if __LINUX__
+#if __PACKED__
 __attribute__((packed))
 #endif
 {
