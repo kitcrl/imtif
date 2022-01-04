@@ -241,6 +241,7 @@ void* __cmain(int argc, char** argv)
 		#endif
 		#if __LINUX__
 		sa.f[0](sa.o);
+
 		#endif
 	}
 	else
@@ -331,7 +332,6 @@ int32_t __box_imtif_x(int32_t argc, int8_t** argv, ServiceArgs* p)
 void signal_handler(int sig)
 {
   signal(sig, SIG_IGN);
-	BOX("terminated");
   exit(0);
 }
 #endif
@@ -348,7 +348,6 @@ void __nmain(int32_t argc, int8_t** argv, void* (*f0)(void*), void* (*f1)(void*)
 	sa.o = o;
 
   #if __LINUX__
-  printf("SIGINT\r\n");
   signal(SIGINT, signal_handler);
   #endif
 

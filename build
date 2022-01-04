@@ -154,7 +154,7 @@ then
 prebuild hf.a32;
 CROSS_COMPILE=yes ARCH_TYPE=a32 OUTPUT_TYPE=STATIC CUSTOM=yes ONE_SHOT=yes ABI=HARD DEBUG=no make clean;
 CROSS_COMPILE=yes ARCH_TYPE=a32 OUTPUT_TYPE=STATIC CUSTOM=yes ONE_SHOT=yes ABI=HARD DEBUG=no make dir;
-CROSS_COMPILE=yes ARCH_TYPE=a32 OUTPUT_TYPE=STATIC CUSTOM=yes ONE_SHOT=yes ABI=HARD DEBUG=yes make all;
+CROSS_COMPILE=yes ARCH_TYPE=a32 OUTPUT_TYPE=STATIC CUSTOM=yes ONE_SHOT=yes ABI=HARD DEBUG=no make all;
 \cp -rfp ./out/libimtif.hf.a32.a ../mtif/hf.a32
 \cp -rfp ./out/libimtif.hf.a32.a ../mtif/hf.a32/libimtif.a
 fi
