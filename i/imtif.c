@@ -1270,7 +1270,7 @@ int32_t __httpd_open(void** h, int8_t* argv, int32_t (*f[])(void*,int32_t,int8_t
 
   if ( NJSON_STR(argv, "PORT", _argv)<0 )
   {
-    e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_PORT, XHTTPD), (void*)"80",(void*)strlen("XXX"));
+    e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_PORT, XHTTPD), (void*)"80",(void*)strlen("XX"));
   }
   else
     e = imtif->setMessage( imtif->h, (void*)MAKELONG(XM_PORT, XHTTPD), (void*)_argv,(void*)strlen(_argv));
