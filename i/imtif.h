@@ -212,6 +212,7 @@ int32_t __httpd_read (void* h, int32_t fd, int8_t* b, int32_t sz, void* moreinfo
 int32_t __httpd_write(void* h, int32_t fd, int8_t* b, int32_t sz, void* moreinfo, void* o);
 int32_t __httpd_open (void** h, int8_t* argv, int32_t (*f[])(void*,int32_t,int8_t*,int32_t,void*,void*), void* o);
 int32_t __httpd_close(void** h);
+int32_t __httpd_close_socket(void* h, int32_t fd)
 #endif
 
 ///////////////////////////////////////////////////////////////////////////////

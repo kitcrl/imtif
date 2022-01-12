@@ -653,6 +653,18 @@ int32_t __socket_close(void** h)
 
   return e;
 }
+
+#if defined __cplusplus
+extern "C"
+#endif
+#if __WIN32__
+__declspec(dllexport)
+#endif
+int32_t __socket_close_socket(void* h, int32_t fd)
+{
+  return ((IMTIF*)h)->setMessage(((IMTIF*)h)->h, (void*)MAKELONG(CLOSE_SOCKET, XSOCKET), fd, 0);
+}
+
 #endif
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
@@ -1392,6 +1404,20 @@ int32_t __httpd_close(void** h)
 
   return e;
 }
+
+
+#if defined __cplusplus
+extern "C"
+#endif
+#if __WIN32__
+__declspec(dllexport)
+#endif
+int32_t __httpd_close_socket(void* h, int32_t fd)
+{
+  return ((IMTIF*)h)->setMessage(((IMTIF*)h)->h, (void*)MAKELONG(CLOSE_SOCKET, XHTTPD), fd, 0);
+}
+
+
 #endif
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
@@ -2092,6 +2118,17 @@ int32_t __httpsd_close(void** h)
 
   return e;
 }
+#if defined __cplusplus
+extern "C"
+#endif
+#if __WIN32__
+__declspec(dllexport)
+#endif
+int32_t __httpsd_close_socket(void* h, int32_t fd)
+{
+  return ((IMTIF*)h)->setMessage(((IMTIF*)h)->h, (void*)MAKELONG(CLOSE_SOCKET, XHTTPD), fd, 0);
+}
+
 #endif
 #endif
 
@@ -2450,6 +2487,17 @@ int32_t __ws_close(void** h)
 
   return e;
 }
+#if defined __cplusplus
+extern "C"
+#endif
+#if __WIN32__
+__declspec(dllexport)
+#endif
+int32_t __ws_close_socket(void* h, int32_t fd)
+{
+  return ((IMTIF*)h)->setMessage(((IMTIF*)h)->h, (void*)MAKELONG(CLOSE_SOCKET, XWEBSOCKET), fd, 0);
+}
+
 #endif
 
 ///////////////////////////////////////////////////////////////////////////////
