@@ -54,7 +54,11 @@ ifeq ($(CUSTOM), yes)
 	COPT += -D__MTIF_LIMITER__=0
 endif
 
+ifeq ($(ONE_SHOT), no)
+	COPT += -D__NODE__=0
+endif
 ifeq ($(ONE_SHOT), yes)
+	COPT += -D__NODE__=1
 	xLIB += $(PROJ_PATH)/../mtif/$(XTARGET)/libmtif.x.$(XTARGET).a
 	xLIB += $(PROJ_PATH)/../mtif/$(XTARGET)/libio.$(XTARGET).a
 endif

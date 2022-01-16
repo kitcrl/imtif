@@ -278,7 +278,7 @@ int32_t __box_imtif_x(int32_t argc, int8_t** argv, ServiceArgs* p)
   memset(_argv, 0, 512);
   readArgs(argc, argv, "--X", _argv); 
 
-  #if __STATIC_LIB__==0
+  #if __NODE__==0
   #if __LINUX__
   hmodule = dlopen(_argv, RTLD_LAZY);
   #endif
@@ -303,7 +303,7 @@ int32_t __box_imtif_x(int32_t argc, int8_t** argv, ServiceArgs* p)
   memset(_argv, 0, 512);
   readArgs(argc, argv, "--s", _argv); 
 
-  #if __STATIC_LIB__==1
+  #if __NODE__==1
   getMessage = mtifGetMessage;
   #endif
 
@@ -315,7 +315,7 @@ int32_t __box_imtif_x(int32_t argc, int8_t** argv, ServiceArgs* p)
   printf("+------------------------+-----------------------------------------------------+\r\n");
   #endif
 
-  #if __STATIC_LIB__==0
+  #if __NODE__==0
   #if __LINUX__
   dlclose(hmodule);
   #endif

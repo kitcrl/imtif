@@ -24,12 +24,6 @@
 #include <dlfcn.h>
 #endif
 
-//
-//#if __STATIC_LIB__==1
-//extern int32_t mtifGetMessage(void* h, void* m, void* w, void* l);
-//extern int32_t mtifSetMessage(void* h, void* m, void* w, void* l);
-//extern int32_t mtifPutMessage(void* h, void* m, void* w, void* l);
-//#endif
 
 #if __LINUX__
 #define __SYSTEM_SERIAL_PORT__             ""
@@ -184,7 +178,7 @@ int32_t modulus(IMTIF* imtif, int8_t* libpath)
   printf(" %-16s:%6d | -> hmodule -> %s\r\n",__FUNCTION__,__LINE__, imtif->hmodule?"NOT NULL":"NULL");
   #endif
 
-  #if __STATIC_LIB__==0
+  #if __NODE__==0
   if ( imtif->hmodule == 0 )
   {
     #if __LINUX__
@@ -216,7 +210,7 @@ int32_t modulus(IMTIF* imtif, int8_t* libpath)
   printf(" %-16s:%6d |\r\n",__FUNCTION__,__LINE__);
   #endif
 
-  #if __STATIC_LIB__==1
+  #if __NODE__==1
   imtif->getMessage = mtifGetMessage;
   imtif->setMessage = mtifSetMessage;
   imtif->putMessage = mtifPutMessage;
@@ -259,7 +253,7 @@ int32_t unmodulus(IMTIF* imtif)
   }
   #endif
 
-  #if __STATIC_LIB__==0
+  #if __NODE__==0
   #if __LINUX__
   if ( imtif->hmodule ) dlclose(imtif->hmodule);
   #endif
@@ -1077,6 +1071,9 @@ void* __httpd_callback(void* h, void* msg, void* wparam, void* lparam)
 		break;
 	case METHOD_POST:
     if ( imtif->callback[IMTIF_CALLBACK_POST] ) e = imtif->callback[IMTIF_CALLBACK_POST](imtif->h, imtif->cbi.fd, (int8_t*)wparam, (int32_t)lparam, 0, imtif->obj);
+		break;
+	case HTTP_NOT_FOUND:
+    if ( imtif->callback[IMTIF_CALLBACK_URI_NOT_FOUND] ) e = imtif->callback[IMTIF_CALLBACK_URI_NOT_FOUND](imtif->h, imtif->cbi.fd, (int8_t*)wparam, (int32_t)lparam, 404, imtif->obj);
 		break;
 
   default:
@@ -2878,7 +2875,7 @@ int32_t __hmac(void** h, int8_t* argv, int32_t (*f[])(void*,int32_t,int8_t*,int3
   {
     free(imtif);
     *h = imtif = 0;
-    #if __STATIC_LIB__==0
+    #if __NODE__==0
     if ( imtif->hmodule )
     {
       #if __LINUX__
@@ -2900,7 +2897,7 @@ int32_t __hmac(void** h, int8_t* argv, int32_t (*f[])(void*,int32_t,int8_t*,int3
   {
     free(imtif);
     *h = imtif = 0;
-    #if __STATIC_LIB__==0
+    #if __NODE__==0
     if ( imtif->hmodule )
     {
       #if __LINUX__
@@ -2923,7 +2920,7 @@ int32_t __hmac(void** h, int8_t* argv, int32_t (*f[])(void*,int32_t,int8_t*,int3
 
   e = imtif->setMessage(&imtif->h, (void*)MAKELONG(RELEASE,MTIF), 0, 0);
 
-  #if __STATIC_LIB__==0
+  #if __NODE__==0
   if ( imtif->hmodule )
   {
     #if __LINUX__

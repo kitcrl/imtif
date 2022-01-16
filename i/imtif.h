@@ -51,6 +51,7 @@ enum
   IMTIF_CALLBACK_READ,
   IMTIF_CALLBACK_READFROM,
   IMTIF_CALLBACK_URI,
+  IMTIF_CALLBACK_URI_NOT_FOUND,
   IMTIF_CALLBACK_POST,
   IMTIF_CALLBACK_GET,
   IMTIF_CALLBACK_SSL_TLS,
@@ -118,7 +119,7 @@ __attribute__((packed))
 #pragma pack()
 #endif
 
-#if __STATIC_LIB__==1
+#if __NODE__==1
 extern int32_t mtifGetMessage(void* h, void* m, void* w, void* l);
 extern int32_t mtifSetMessage(void* h, void* m, void* w, void* l);
 extern int32_t mtifPutMessage(void* h, void* m, void* w, void* l);
