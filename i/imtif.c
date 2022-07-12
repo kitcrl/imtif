@@ -322,10 +322,10 @@ void* __socket_callback(void* h, void* msg, void* wparam, void* lparam)
     case 0xE000FD0B:
       break;
     case 0xE000FD0F:
-      if ( imtif->callback[IMTIF_CALLBACK_DISCONNECTED] ) e = imtif->callback[IMTIF_CALLBACK_DISCONNECTED](imtif->h, (int32_t)wparam, 0, 0, lparam, imtif->obj);
+      if ( imtif->callback[IMTIF_CALLBACK_CLOSE] ) e = imtif->callback[IMTIF_CALLBACK_CLOSE](imtif->h, (int32_t)wparam, 0, 0, lparam, imtif->obj);
       break;
     case 0xE000FD0A:
-      if ( imtif->callback[IMTIF_CALLBACK_CONNECTED] ) e = imtif->callback[IMTIF_CALLBACK_CONNECTED](imtif->h, (int32_t)wparam, 0, 0, lparam, imtif->obj);
+      if ( imtif->callback[IMTIF_CALLBACK_OPEN] ) e = imtif->callback[IMTIF_CALLBACK_OPEN](imtif->h, (int32_t)wparam, 0, 0, lparam, imtif->obj);
       break;
     case 0xE000100B:
       break;
@@ -715,10 +715,10 @@ void* __http_callback(void* h, void* msg, void* wparam, void* lparam)
     case 0xE000FD0B:
       break;
     case 0xE000FD0F:
-      if ( imtif->callback[IMTIF_CALLBACK_DISCONNECTED] ) e = imtif->callback[IMTIF_CALLBACK_DISCONNECTED](imtif->h, (int32_t)wparam, 0, 0, lparam, imtif->obj);
+      if ( imtif->callback[IMTIF_CALLBACK_CLOSE] ) e = imtif->callback[IMTIF_CALLBACK_CLOSE](imtif->h, (int32_t)wparam, 0, 0, lparam, imtif->obj);
       break;
     case 0xE000FD0A:
-      if ( imtif->callback[IMTIF_CALLBACK_CONNECTED] ) e = imtif->callback[IMTIF_CALLBACK_CONNECTED](imtif->h, (int32_t)wparam, 0, 0, lparam, imtif->obj);
+      if ( imtif->callback[IMTIF_CALLBACK_OPEN] ) e = imtif->callback[IMTIF_CALLBACK_OPEN](imtif->h, (int32_t)wparam, 0, 0, lparam, imtif->obj);
       break;
     case 0xE000100B:
       break;
@@ -1082,10 +1082,10 @@ void* __httpd_callback(void* h, void* msg, void* wparam, void* lparam)
     case 0xE000FD0B:
       break;
     case 0xE000FD0F:
-      if(imtif->callback[IMTIF_CALLBACK_DISCONNECTED]) e = imtif->callback[IMTIF_CALLBACK_DISCONNECTED](imtif->h, (int32_t)wparam, 0, 0, lparam, imtif->obj);
+      if(imtif->callback[IMTIF_CALLBACK_CLOSE]) e = imtif->callback[IMTIF_CALLBACK_CLOSE](imtif->h, (int32_t)wparam, 0, 0, lparam, imtif->obj);
       break;
     case 0xE000FD0A:
-      if(imtif->callback[IMTIF_CALLBACK_CONNECTED]) e = imtif->callback[IMTIF_CALLBACK_CONNECTED](imtif->h, (int32_t)wparam, 0, 0, lparam, imtif->obj);
+      if(imtif->callback[IMTIF_CALLBACK_OPEN]) e = imtif->callback[IMTIF_CALLBACK_OPEN](imtif->h, (int32_t)wparam, 0, 0, lparam, imtif->obj);
       break;
     case 0xE000100B:
       break;
@@ -2539,10 +2539,10 @@ void* __serial_callback(void* h, void* msg, void* wparam, void* lparam)
     case 0xE000FD0B:
       break;
     case 0xE000FD0F:
-      if(imtif->callback[IMTIF_CALLBACK_DISCONNECTED]) e = imtif->callback[IMTIF_CALLBACK_DISCONNECTED](imtif->h, (int32_t)wparam, 0, 0, lparam, imtif->obj);
+      if(imtif->callback[IMTIF_CALLBACK_CLOSE]) e = imtif->callback[IMTIF_CALLBACK_CLOSE](imtif->h, (int32_t)wparam, 0, 0, lparam, imtif->obj);
       break;
     case 0xE000FD0A:
-      if(imtif->callback[IMTIF_CALLBACK_CONNECTED]) e = imtif->callback[IMTIF_CALLBACK_CONNECTED](imtif->h, (int32_t)wparam, 0, 0, lparam, imtif->obj);
+      if(imtif->callback[IMTIF_CALLBACK_OPEN]) e = imtif->callback[IMTIF_CALLBACK_OPEN](imtif->h, (int32_t)wparam, 0, 0, lparam, imtif->obj);
       break;
     case 0xE000100B:
       break;

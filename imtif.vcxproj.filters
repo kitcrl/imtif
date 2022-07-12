@@ -22,6 +22,9 @@
     <ClInclude Include="i\nm.h">
       <Filter>i</Filter>
     </ClInclude>
+    <ClInclude Include="i\isifr.h">
+      <Filter>i</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="i\imtif.c">
@@ -34,6 +37,9 @@
       <Filter>i</Filter>
     </ClCompile>
     <ClCompile Include="i\nm.c">
+      <Filter>i</Filter>
+    </ClCompile>
+    <ClCompile Include="i\isifr.c">
       <Filter>i</Filter>
     </ClCompile>
   </ItemGroup>

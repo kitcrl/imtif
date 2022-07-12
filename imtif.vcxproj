@@ -20,12 +20,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="i\imtif.c" />
+    <ClCompile Include="i\isifr.c" />
     <ClCompile Include="i\njson.c" />
     <ClCompile Include="i\nm.c" />
     <ClCompile Include="i\nutil.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="i\imtif.h" />
+    <ClInclude Include="i\isifr.h" />
     <ClInclude Include="i\njson.h" />
     <ClInclude Include="i\nm.h" />
     <ClInclude Include="i\nutil.h" />

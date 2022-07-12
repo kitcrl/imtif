@@ -68,6 +68,7 @@
 #include <sys/timeb.h>
 #include <process.h>
 #include <ws2tcpip.h>
+#include <wincrypt.h>
 #endif
 
 #include <time.h>
@@ -267,8 +268,17 @@ pthread_attr_destroy(&tattr);                                           \
 //#endif
 
 
+#define xSLEEP(a)          \
+{                               \
+struct timeval v = {0};         \
+v.tv_sec = a/1000000;           \
+v.tv_usec = a%1000000;          \
+select(1,0,0,0,&v);             \
+}
+
+#if 0
 #if __WIN32__
-#define xSLEEP(a)          Sleep((uint32_t)a)
+#define xSLEEP(a)         Sleep(a);
 #endif
 #if __LINUX__
 #define xSLEEP(a)               \
@@ -279,6 +289,8 @@ v.tv_usec = a%1000000;          \
 select(1,0,0,0,&v);             \
 }
 #endif
+#endif
+
 
 #define xSET_SEMAPHORE(SR,v,chk)    ((v&chk)?(SR|=v):(SR&=~v))
 #define xGET_SEMAPHORE(SR,v,chk,count,r)   \
